@@ -1,9 +1,8 @@
 # Cognitive Warrant: Public Research Materials
 
-Public, curated companion repository for *From Literary Warrant to Cognitive Warrant: Extending Hybrid Meaning Theory to Professionally Imposed Categorical Boundaries* — an MLIS capstone examining whether the categorical and hierarchical structure of the Library of Congress Subject Headings (LCSH) corresponds to measurable patterns in human semantic cognition, adapting Trott and Bergen's (2023) hybrid meaning theory to a professionally imposed controlled vocabulary.
+Public, curated repository for my MLIS capstone *From Literary Warrant to Cognitive Warrant: Extending Hybrid Meaning Theory to Professionally Imposed Categorical Boundaries* — examining whether the categorical and hierarchical structure of the Library of Congress Subject Headings (LCSH) corresponds to measurable patterns in human semantic cognition, adapting Trott and Bergen's (2023) hybrid meaning theory to a professionally imposed controlled vocabulary.
 
 **Principal Investigator:** Nicholas Meister
-**Advisor:** Dr. Krystyna Matusiak
 **Institution:** University of Denver, MLIS Program
 
 ## Live site
