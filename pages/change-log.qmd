@@ -1,0 +1,23 @@
+---
+title: "Change Log"
+---
+
+## Overview
+
+This page lists versions of my research document and the corresponding changes. 
+
+
+
+| Version | Date | Updates |
+| ----- | ----- | ----- |
+| 2.5.3 | August 13, 2026 | Minor edits to theory chapter and Section 3.4 |
+| 2.5.2 | August 12, 2026 | Added a paragraph to the lit review chapter pointing towards the new section "Information-Theoretic Accounts of Category Structure in Cognitive Science" in the theoretical framework chapter |
+| 2.5.1 | August 11, 2026 | Expanded Maximum Entropy portion of Section 3.3: H3 as a Mathematical Consequence of the CI Framework |
+
+
+
+[Back to Research Document](manuscript.qmd)
+
+
+
+

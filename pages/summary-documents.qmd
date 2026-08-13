@@ -1,0 +1,23 @@
+---
+title: "Summary Documents"
+---
+
+## Overview
+
+These are two documents I created to explain simply what my capstone project was trying to accomplish.
+
+## Documents
+
+::: {.file-card}
+[📄 Overall Summary](../assets/pdf/overall_summary.pdf)
+
+This is a document that explains (in plain language) the Library of Congress Subject Headings and its hierarchical structure, polysemy/homonymy, what question my capstone project addresses, my research design, and possible implications of my study. 
+:::
+
+::: {.file-card}
+[📄 Summary of LCSH Authority Records and Their Graph Representation](../assets/pdf/summary_lcsh_graph.pdf)
+
+This document explains (in plain language) what an LCSH authority record and its seven components are, what a directed graph is, how authority records are turned into a graph, and how I then measure things like hierarchical distance. 
+:::
+
+

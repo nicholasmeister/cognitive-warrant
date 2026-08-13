@@ -1,0 +1,8 @@
+# Python environment for src/analysis/get_distances.py.
+# Not pinned to exact versions -- any recent release of each should work.
+numpy
+pandas
+torch
+scipy
+tqdm
+transformers

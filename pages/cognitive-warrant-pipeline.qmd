@@ -1,0 +1,748 @@
+---
+title: "Cognitive Warrant Analytic Pipeline"
+subtitle: "Executable walkthrough of the proof-of-concept analysis, for transparency and reproducibility"
+---
+
+## Overview
+
+This page is an executable, narrated version of the analysis pipeline described in Chapter 5 of the [research document](manuscript.qmd) ("The Analytic Pipeline: Logistic Regression and the Estimation of Cognitive Warrant Metrics"). It runs the pipeline on the real merged Experiment 2 / LCSH dataset and is published here, in the style of Trott and Bergen's own [pre-registration code](https://github.com/seantrott/trott_ph_amb), so that other researchers can inspect, reproduce, and critique every step -- including the diagnostic dead ends and corrections that shaped the final approach.
+
+The pipeline takes each **stimulus pair** (a prime sentence and a target sentence sharing a word, drawn from Trott and Bergen's Experiment 2) and asks how much information a predictor -- BERT cosine distance ($d$), LCSH heading congruence ($S$), or LCSH hierarchical distance ($h$) -- carries about whether the pair reflects the *same* underlying sense ($Y$). That question is operationalized as **cognitive information**, $CI(d)$: the reduction in the entropy of $Y$ once the predictor is known, expressed in bits.
+
+At a high level, the pipeline:
+
+1. Restructures trial-level records (repeated measures) into one row per unique stimulus pair.
+2. Runs diagnostics that determine how the rest of the pipeline should be interpreted -- most importantly, whether the LCSH-derived predictor $S$ is empirically informative or a tautological restatement of the outcome.
+3. Fits baseline (`Y ~ d`) and full (`Y ~ d + S`) logistic models, using Firth's bias-reduced estimator where ordinary `glm()` shows separation.
+4. Converts fitted probabilities to entropy, then to piecewise and pointwise cognitive information.
+5. Repeats the same pipeline with `hier_distance` (recoded as `h_finite`) in place of `S`, since `S` turns out to be tautologically identical to the outcome in this dataset (see [Data diagnostics]).
+6. Saves all tables, plots, and fitted models used elsewhere in the write-up.
+
+Required packages: `install.packages(c("tidyverse", "logistf", "lme4", "splines", "patchwork", "knitr"))`.
+
+```{r setup}
+#| message: false
+
+library(tidyverse) # data wrangling and plotting
+library(logistf)   # Firth's bias-reduced logistic regression (stable under separation)
+library(lme4)      # generalized linear mixed-effects models (random-intercept robustness check)
+library(splines)   # loaded for parity with the modeling scripts that build on this one
+library(patchwork) # combines separate ggplots into one figure
+library(knitr)      # renders the LaTeX table at the end of this page
+
+set.seed(1226)
+```
+
+## Step 0: Load and restructure trial-level records
+
+The trial-level file inherits the repeated-measures structure of Trott and Bergen's Experiment 2: 187 subjects, each responding to a subset of stimulus pairs. This step collapses that structure down to one row per unique `(word, version_with_order)` pair, which is the unit of analysis for everything that follows.
+
+This walkthrough reads `s2_trials_lcsh_distances.csv` from `assets/data/`, the copy of the merged dataset committed to this repository (the working copy under `data/processed/`, produced by [`get_distances.py`](https://github.com/nicholasmeister/lcsh_polysemy_capstone/blob/main/src/analysis/get_distances.py), is regenerated locally and excluded from version control). Paths below are relative to this file's location in `pages/`, so the page renders correctly both locally and as part of the built site.
+
+```{r load-data}
+#| message: false
+
+raw <- read_csv("../assets/data/s2_trials_lcsh_distances.csv", show_col_types = FALSE)
+
+# distance_elmo_lcsh is entirely missing in this file (the LCSH-anchored ELMo
+# frame was never computed) -- dropped rather than carried as an all-NA column.
+raw <- raw %>% select(-distance_elmo_lcsh)
+```
+
+`same`, `same_heading`, `hier_distance`, `distance_bert`, `ambiguity_type`, and `Class` are all properties of the *stimulus pair*, not of the trial -- each should take exactly one value within every `(word, version_with_order)` group. The check below confirms that empirically rather than assuming it; if it ever fails on a future data pull, that is a signal to stop and investigate before trusting the collapse that follows.
+
+```{r pair-level-check}
+pair_key <- c("word", "version_with_order")
+pair_level_cols <- c("same", "same_heading", "hier_distance", "same_nbhd",
+                      "distance_bert", "distance_bert_lcsh", "distance_elmo",
+                      "ambiguity_type", "Class")
+
+nun_check <- raw %>%
+  group_by(across(all_of(pair_key))) %>%
+  summarise(across(all_of(pair_level_cols), n_distinct), .groups = "drop")
+
+stopifnot(all(nun_check[pair_level_cols] == 1))
+message("Pair-level covariates confirmed constant within (word, version_with_order).")
+```
+
+With that confirmed, each pair is reduced to a single row. A trial-level summary (mean accuracy, mean log RT, subject/trial counts) is kept alongside it in case RT or accuracy covariates are wanted for a robustness check later -- it is not used by the $CI(d)$ pipeline itself, which operates on $Y_i$ = `same`, not on RT or accuracy.
+
+```{r restructure}
+trial_summary <- raw %>%
+  group_by(across(all_of(pair_key))) %>%
+  summarise(
+    n_trials     = n(),
+    n_subjects   = n_distinct(subject),
+    mean_correct = mean(correct_response),
+    mean_log_rt  = mean(log_rt),
+    .groups = "drop"
+  )
+
+pairs_df <- raw %>%
+  distinct(across(all_of(c(pair_key, pair_level_cols)))) %>%
+  left_join(trial_summary, by = pair_key) %>%
+  mutate(
+    pair_id = paste(word, version_with_order, sep = "__"),
+    Y       = as.integer(same),          # Y_i: ground-truth same-sense indicator
+    S       = as.integer(same_heading),  # S_i: LCSH heading congruence
+    d       = distance_bert,             # d_i: BERT cosine distance (unmodified frame)
+    h       = hier_distance              # h_i: BT/NT shortest-path distance
+                                          #      (Inf if S_i = 0 with no shared ancestor
+                                          #      within the search horizon)
+  )
+
+message(sprintf(
+  "Collapsed %d trial-level rows (%d subjects) into %d unique stimulus pairs across %d words.",
+  nrow(raw), n_distinct(raw$subject), nrow(pairs_df), n_distinct(pairs_df$word)
+))
+```
+
+## Data diagnostics
+
+These checks run *before* any downstream number is trusted, because they determine how the rest of the pipeline should be read.
+
+### Is $S$ perfectly collinear with $Y$?
+
+This is the single most consequential check in the pipeline. If `same_heading` ($S$) is identical to `same` ($Y$) for every pair, the "full model" logistic regression of $Y$ on $d$ and $S$ is not testing whether LCSH heading congruence adds information beyond BERT distance -- it is recovering a tautology, because $S$ was constructed to equal $Y$ for every pair in this file (each dictionary sense M1/M2 was mapped one-to-one onto a single LCSH authority record). Under that condition, $CI(d)$ comes out equal to $H(Y \mid d)$ exactly (up to numerical floor), and warrant efficiency $\bar\eta$ is $\approx 1$ everywhere -- a mechanical consequence of how `same_heading` was derived here, not an empirical finding about LCSH's cognitive value.
+
+```{r diagnostic-s-vs-y}
+same_vs_heading <- mean(pairs_df$Y == pairs_df$S)
+message(sprintf("Proportion of pairs where Y (same) == S (same_heading): %.4f", same_vs_heading))
+
+if (isTRUE(all.equal(same_vs_heading, 1))) {
+  warning(paste(
+    "same_heading is IDENTICAL to same for every pair in this file.",
+    "The baseline-vs-full model comparison below will show a trivial,",
+    "perfectly-separated effect of S -- this reflects how the LCSH mapping",
+    "was constructed (one heading per dictionary sense), not an empirical",
+    "test of whether LCSH boundaries carry information beyond distance.",
+    "hier_distance (h), which DOES vary independently of Y among",
+    "cross-heading pairs, is the more informative structural variable for",
+    "this proof of concept -- see 'Structural extension' below."
+  ))
+}
+```
+
+Confirmed: `same_heading` and `same` agree on every pair in this file. Everything reported under "S (same_heading)" below should be read as a **methods validation** (does the pipeline recover the expected ceiling case correctly?), not as an empirical test of LCSH's cognitive value. The empirical test is the `hier_distance` extension further down.
+
+### Where does `hier_distance` carry information?
+
+`hier_distance` is `Inf` for cross-heading pairs with no shared ancestor within the search horizon, and exactly `0` for same-heading pairs (trivially, since a node has zero path length to itself). It is only *non-trivially* informative within the cross-heading ($S = 0$) subset, where it takes finite values greater than 0 for pairs that share a broader term, and `Inf` for pairs that do not.
+
+```{r diagnostic-hier-distance}
+message("hier_distance cross-tab (S = same_heading x finite/inf/zero):")
+pairs_df %>%
+  mutate(h_cat = case_when(
+    is.infinite(h) ~ "inf",
+    h == 0         ~ "zero",
+    TRUE           ~ "finite>0"
+  )) %>%
+  count(S, h_cat)
+```
+
+### Coverage of the theoretically critical distance range
+
+Chapter 4 (H3-as-theorem) predicts $CI(d)$ should peak somewhere in an intermediate zone of BERT cosine distance (provisionally, $d \in [0.30, 0.60]$). This just checks that the dataset has enough pairs in that range to say anything about it.
+
+```{r diagnostic-distance-range}
+message(sprintf("distance_bert range: [%.3f, %.3f]", min(pairs_df$d), max(pairs_df$d)))
+message(sprintf(
+  "Proportion of pairs with d in [0.30, 0.60]: %.3f",
+  mean(pairs_df$d >= 0.30 & pairs_df$d <= 0.60)
+))
+```
+
+## Step 1: Fit baseline and full logistic models
+
+The baseline model estimates $P(Y=1 \mid d)$; the full model adds $S$:
+
+$$\text{logit } P(Y=1\mid d) = \beta_0 + \beta_1 d \qquad\qquad \text{logit } P(Y=1\mid d, S) = \gamma_0 + \gamma_1 d + \gamma_2 S$$
+
+Given the diagnostic above, the full model is expected to show quasi/perfect separation on $S$: `glm()` will warn that fitted probabilities are numerically 0 or 1, and the standard error on $\gamma_2$ will be enormous. The point estimates and fitted probabilities are still usable for the entropy calculations that follow, but the reported p-values and confidence intervals for $\gamma_2$ are not trustworthy from `glm()` alone in this degenerate case.
+
+```{r fit-glm-models}
+#| warning: true
+
+m_baseline <- glm(Y ~ d, data = pairs_df, family = binomial(link = "logit"))
+m_full_glm <- glm(Y ~ d + S, data = pairs_df, family = binomial(link = "logit"))
+
+if (!m_full_glm$converged || any(abs(coef(m_full_glm)) > 15)) {
+  message("m_full_glm shows signs of (quasi-)separation, as expected -- fitting Firth's bias-reduced logistic regression as a stable alternative.")
+}
+```
+
+Firth's bias-reduced logistic regression does not blow up under perfect separation and yields finite, interpretable fitted probabilities even when $S$ is a near-deterministic function of $Y$. It is the preferred specification for the entropy calculations in the rest of this page whenever `m_full_glm` shows separation, as it does here.
+
+```{r fit-firth-model}
+m_full_firth <- logistf(Y ~ d + S, data = pairs_df)
+
+summary(m_baseline)
+summary(m_full_glm)
+summary(m_full_firth)
+```
+
+A likelihood-ratio test gives the regression-side estimate of whether $CI(d) > 0$, i.e., the finite-sample test of $I(Y; S \mid d) = 0$. Reported for completeness; interpret cautiously given the separation diagnosed above.
+
+```{r lrt-baseline-vs-full}
+anova(m_baseline, m_full_glm, test = "Chisq")
+```
+
+As an optional robustness check, a random intercept for `word` accounts for pairs being nested within word (25 words, ~12 pairs each). This is likely to be singular or unstable for the same separation reason, but is worth inspecting.
+
+```{r glmer-robustness-check}
+#| warning: true
+
+m_full_glmer <- tryCatch(
+  glmer(Y ~ d + S + (1 | word), data = pairs_df, family = binomial),
+  warning = function(w) { message("glmer warning (expected under separation): ", conditionMessage(w)); NULL },
+  error   = function(e) { message("glmer error: ", conditionMessage(e)); NULL }
+)
+```
+
+Finally, fitted probabilities are attached to `pairs_df`. The Firth model supplies the full-model probability as the primary specification; the `glm()` fit is retained alongside for comparison.
+
+```{r fitted-probabilities}
+pairs_df <- pairs_df %>%
+  mutate(
+    p_baseline = predict(m_baseline, type = "response"),
+    p_full_glm = predict(m_full_glm, type = "response"),
+    p_full     = plogis(predict(m_full_firth, newdata = pairs_df, type = "link"))
+  )
+```
+
+## Step 2: From fitted probabilities to conditional entropy
+
+The binary entropy function $H(p) = -p\log_2 p - (1-p)\log_2(1-p)$ converts a fitted probability into bits of uncertainty about $Y$.
+
+```{r entropy-function}
+h_b <- function(p) {
+  p <- pmin(pmax(p, 1e-12), 1 - 1e-12)  # guard against log(0)
+  -p * log2(p) - (1 - p) * log2(1 - p)
+}
+
+pairs_df <- pairs_df %>%
+  mutate(
+    H_baseline = h_b(p_baseline),
+    H_full     = h_b(p_full)
+  )
+```
+
+## Step 3: Piecewise (binned) cognitive information, $CI(d)$
+
+Pairs are grouped into `K = 6` bins of BERT cosine distance -- fewer than in the schematic Chapter 5 template, given only 299 pairs in this dataset; re-run with `K = 8` or `K = 10` as a sensitivity check if extending this analysis.
+
+```{r piecewise-ci}
+K <- 6
+pairs_df <- pairs_df %>%
+  mutate(distance_bin = cut(d, breaks = K, include.lowest = TRUE))
+```
+
+Within each bin, `CI_k` is computed two ways. `H_bar_d` (and the resulting `CI_k`) comes from `m_baseline`, a model fit *independently* of `m_full_firth`, so this version is not guaranteed non-negative by Jensen's inequality -- that guarantee only holds when $H(Y\mid d)$ is the entropy of the *same* model's own $S$-marginalized mixture probability, not an independently-estimated stand-in. Within a bin, every pair has an actual observed $S$, so `mean(p_full)` (`p_bar_full`) is already the bin's true, empirical $S$-marginalized probability -- no local-window weighting is needed at this level of aggregation. `CI_k_v2`, built from `p_bar_full`, is the internally consistent version and is what the rest of this page uses; `CI_k` is retained alongside for comparison. `p_bar_full` is also exposed as its own column so [Step 4](#step-4-pointwise-cognitive-information-pci_i) can reuse it as `pCI`'s marginal reference.
+
+```{r piecewise-ci-table}
+ci_piecewise <- pairs_df %>%
+  group_by(distance_bin) %>%
+  summarise(
+    n_pairs     = n(),
+    x_mid       = mean(d),
+    H_bar_d     = mean(H_baseline),
+    H_bar_dS    = mean(H_full),
+    CI_k        = H_bar_d - H_bar_dS,
+    p_bar_full  = mean(p_full),
+    H_bar_d_mix = h_b(p_bar_full),
+    CI_k_v2     = H_bar_d_mix - H_bar_dS,
+    P_d         = n_pairs / nrow(pairs_df),
+    .groups = "drop"
+  )
+
+ci_piecewise
+```
+
+A smooth, model-implied $CI(d)$ curve on a fine grid can be plotted against the piecewise estimate above, and against the theoretical inverted-U prediction (Chapter 4, H3-as-theorem). Because $S$ is (quasi-)deterministic given $d$ in this dataset, the population-averaged $H(Y \mid d, S)$ on the grid is computed by weighting the $S=0$ and $S=1$ curves by the empirical $P(S=1 \mid d)$ at each $d$, rather than assuming a fixed $S$. A local (±0.05) empirical window is used as a simple approximation of that weight, falling back to the global mean when no pairs fall in the window.
+
+```{r ci-grid}
+grid_d <- tibble(d = seq(min(pairs_df$d), max(pairs_df$d), length.out = 200))
+grid_d <- grid_d %>%
+  mutate(
+    p_baseline_grid = predict(m_baseline, newdata = grid_d, type = "response"),
+    p_full_grid_S0  = plogis(predict(m_full_firth, newdata = mutate(grid_d, S = 0), type = "link")),
+    p_full_grid_S1  = plogis(predict(m_full_firth, newdata = mutate(grid_d, S = 1), type = "link")),
+    H_baseline_grid = h_b(p_baseline_grid)
+  )
+
+grid_d <- grid_d %>%
+  rowwise() %>%
+  mutate(
+    pi_S1 = mean(pairs_df$S[abs(pairs_df$d - d) <= 0.05]),
+    pi_S1 = ifelse(is.nan(pi_S1), mean(pairs_df$S), pi_S1),
+    H_full_grid = pi_S1 * h_b(p_full_grid_S1) + (1 - pi_S1) * h_b(p_full_grid_S0),
+    CI_grid = H_baseline_grid - H_full_grid
+  ) %>%
+  ungroup()
+```
+
+Just as for the piecewise estimate, `CI_grid` uses `H_baseline_grid` from `m_baseline` -- a model fit independently of `m_full_firth` -- so it is not guaranteed non-negative. `CI_grid_v2` fixes this the same way `CI_k_v2` did: by computing $H(Y\mid d)$ from the full model's own $S$-marginalized mixture probability (`p_mix_S`) instead. This correction eliminates 85/85 negative grid points at $d > 0.4$ that appear in the uncorrected version, and is the version used from here on.
+
+```{r ci-grid-corrected}
+grid_d <- grid_d %>%
+  mutate(
+    p_mix_S  = pi_S1 * p_full_grid_S1 + (1 - pi_S1) * p_full_grid_S0,
+    H_true_S = h_b(p_mix_S),
+    CI_grid_v2 = H_true_S - H_full_grid
+  )
+
+p_ci_S <- ggplot(grid_d, aes(d, CI_grid_v2)) +
+  geom_line() +
+  geom_point(data = ci_piecewise, aes(x_mid, CI_k_v2), inherit.aes = FALSE) +
+  labs(x = "BERT cosine distance (d)", y = "CI(d), bits", title = "S (same_heading)")
+
+p_ci_S
+```
+
+## Step 4: Pointwise cognitive information, $pCI_i$
+
+`pCI` measures how much a single pair's outcome is (dis)confirmed by the full model relative to a marginal reference, in bits:
+
+$$pCI_i = \log_2\frac{P_{\text{full}}(Y_i)}{P_{\text{marginal}}(Y_i)}$$
+
+The identity "$E[pCI_i \mid \text{bin } k] = CI_k$ by construction" is a claim about an in-*expectation* relationship between two log-probability terms computed from the *same* pair of reference models -- it only holds if `pCI` and `CI_k` are built from consistent models. Using `p_baseline` (from `m_baseline`, fit independently of `m_full_firth`) as the marginal reference, as in `pCI` below, introduces a residual term equal to the KL divergence between the true (mixture) distribution and `m_baseline`'s fitted distribution within each pair's bin -- not sampling noise, but a genuine, bin-varying bias that grows wherever `m_baseline` is a poor local approximation (the sparse, high-distance bins where this shows up most). `pCI_v2`, using `p_bar_full` (the full model's own bin-mean, $S$-marginalized probability, from `ci_piecewise`) as the marginal reference instead, is the internally consistent version paired with `CI_k_v2`.
+
+```{r pointwise-ci}
+pairs_df <- pairs_df %>%
+  mutate(
+    p_full_obs     = ifelse(Y == 1, p_full,     1 - p_full),
+    p_baseline_obs = ifelse(Y == 1, p_baseline, 1 - p_baseline),
+    pCI            = log2(p_full_obs / p_baseline_obs)
+  ) %>%
+  left_join(ci_piecewise %>% select(distance_bin, p_bar_full), by = "distance_bin") %>%
+  mutate(
+    p_marginal_obs = ifelse(Y == 1, p_bar_full, 1 - p_bar_full),
+    pCI_v2         = log2(p_full_obs / p_marginal_obs)
+  )
+```
+
+As an internal consistency check, the mean of `pCI_v2` within a bin should approximate that bin's piecewise `CI_k_v2` -- the two are computed from different formulas at different levels of aggregation, so agreement indicates the *implementation*, not just the theory, is behaving as specified.
+
+```{r consistency-check}
+consistency_check <- pairs_df %>%
+  group_by(distance_bin) %>%
+  summarise(mean_pCI_v2 = mean(pCI_v2), .groups = "drop") %>%
+  left_join(ci_piecewise, by = "distance_bin") %>%
+  mutate(diff = mean_pCI_v2 - CI_k_v2)
+
+consistency_check
+```
+
+Pairs with the most negative `pCI_v2` are candidates where a heading-reform diagnostic would flag the LCSH heading assignment as misdirecting a purely distributional judgment about sense identity. Because $S = Y$ in this dataset (per the diagnostic above), a negative `pCI_v2` here can only arise from a genuine bin-marginal-vs-full model disagreement near the fitted decision boundary, not from $S$ disagreeing with $Y$ -- interpret accordingly. The uncorrected `pCI` is retained alongside for comparison.
+
+```{r most-negative-pci}
+pairs_df %>%
+  select(pair_id, word, ambiguity_type, Y, S, h, d, pCI, pCI_v2) %>%
+  arrange(pCI_v2) %>%
+  slice_head(n = 10)
+```
+
+## Step 5: Expected cognitive information and warrant efficiency
+
+$\overline{CI}$ (the distance-weighted average of $CI_k$) and $\bar\eta$ (warrant efficiency: the share of baseline entropy that the predictor resolves) summarize the whole curve in two numbers. Both use `CI_k_v2` and `H_bar_d_mix` (the corrected columns from `ci_piecewise` above).
+
+```{r expected-ci}
+CI_bar  <- with(ci_piecewise, sum(P_d * CI_k_v2))
+eta_bar <- CI_bar / with(ci_piecewise, sum(P_d * H_bar_d_mix))
+
+message(sprintf("Expected cognitive information, CI-bar = %.4f bits", CI_bar))
+message(sprintf("Warrant efficiency, eta-bar = %.4f", eta_bar))
+```
+
+## Structural extension: `hier_distance` as the non-tautological predictor
+
+Because $S = Y$ exactly in this file, the $S$-based $CI(d)$ above is a ceiling artifact of the mapping, not an empirical result -- see [Data diagnostics]. `hier_distance` ($h$) is **not** tautologically fixed by $Y$: among cross-heading pairs ($S = 0$), $h$ takes finite values for pairs sharing a broader term and `Inf` otherwise, and this variation is independent of the same/different-sense label by construction. A model of $Y$ using $d$ and a finite/infinite recoding of $h$ -- rather than $S$ -- is the more informative proof-of-concept computation on this particular file, since its success is not guaranteed by the way the variables were built.
+
+```{r hier-recode}
+pairs_df <- pairs_df %>%
+  mutate(
+    h_finite = is.finite(h),                    # TRUE if a shared BT/NT ancestor exists within the search horizon
+    h_capped = ifelse(is.finite(h), h, NA_real_) # finite hierarchical distances only
+  )
+```
+
+```{r hier-fit-glm}
+#| warning: true
+
+m_full_hier <- glm(Y ~ d + h_finite, data = pairs_df, family = binomial(link = "logit"))
+summary(m_full_hier)
+anova(m_baseline, m_full_hier, test = "Chisq")
+```
+
+`m_full_hier` is *not* a clean, non-separated fit: `h_finite = FALSE` implies $Y = 0$ for all 119 such pairs with zero exceptions, and a single categorical level with a 0% event rate is enough to induce quasi-complete separation, regardless of how the other level mixes. This is visible directly above: the coefficient on `h_finiteTRUE` (19.29) has an enormous standard error (936.97), giving $z \approx 0.02$, $p \approx 0.98$ -- the classic large-estimate / large-SE / near-zero-$z$ signature of separation. That Wald p-value is not usable. The likelihood-ratio test above (deviance = 89.43 on 1 df, $p < 2.2\times10^{-16}$) remains valid under separation, since it compares log-likelihoods directly rather than relying on the asymptotic normality of the coefficient estimate -- report the LRT, not `summary()`'s p-value, for `h_finite`'s effect. This is a materially different situation from the $S$ model: there, the LRT reflects the residual deviance collapsing essentially to 0 (a perfect fit); here, it reflects a strong but non-perfect effect.
+
+As with the $S$ model, the entropy pipeline below refits via Firth's bias-reduced logistic regression, so fitted probabilities (and everything downstream) come from a stable, finite estimate rather than the quasi-separated `glm()` fit.
+
+```{r hier-fit-firth}
+m_full_hier_firth <- logistf(Y ~ d + h_finite, data = pairs_df)
+summary(m_full_hier_firth)
+```
+
+### Steps 2-5, re-run for the `hier_distance` model
+
+The fitted probability, entropy, piecewise $CI(d)$, and pointwise $pCI$ steps above are repeated here using `m_full_hier_firth` in place of `m_full_firth`. The same `distance_bin` factor from the $S$-based table is reused throughout, so the two piecewise tables are directly comparable bin-for-bin.
+
+```{r hier-entropy}
+pairs_df <- pairs_df %>%
+  mutate(
+    p_full_hier = plogis(predict(m_full_hier_firth, newdata = pairs_df, type = "link")),
+    H_full_hier = h_b(p_full_hier)
+  )
+```
+
+```{r hier-piecewise-ci}
+ci_piecewise_hier <- pairs_df %>%
+  group_by(distance_bin) %>%
+  summarise(
+    n_pairs          = n(),
+    x_mid            = mean(d),
+    H_bar_d          = mean(H_baseline),
+    H_bar_dh         = mean(H_full_hier),
+    CI_k_hier        = H_bar_d - H_bar_dh,
+    p_bar_full_hier  = mean(p_full_hier),
+    H_bar_d_mix_hier = h_b(p_bar_full_hier),
+    CI_k_hier_v2     = H_bar_d_mix_hier - H_bar_dh,
+    P_d              = n_pairs / nrow(pairs_df),
+    .groups = "drop"
+  )
+
+ci_piecewise_hier
+```
+
+The grid curve replaces the $S=0/1$ reweighting block with the `h_finite = FALSE/TRUE` analogue, predicting from `m_full_hier_firth` (not the quasi-separated `m_full_hier`) using the same link-scale-predict-then-`plogis()` pattern as the $S$-based grid above.
+
+```{r hier-ci-grid}
+grid_d <- grid_d %>%
+  mutate(
+    p_full_grid_h0 = plogis(predict(m_full_hier_firth, newdata = mutate(grid_d, h_finite = FALSE), type = "link")),
+    p_full_grid_h1 = plogis(predict(m_full_hier_firth, newdata = mutate(grid_d, h_finite = TRUE),  type = "link"))
+  ) %>%
+  rowwise() %>%
+  mutate(
+    pi_h1 = mean(pairs_df$h_finite[abs(pairs_df$d - d) <= 0.05]),
+    pi_h1 = ifelse(is.nan(pi_h1), mean(pairs_df$h_finite), pi_h1),
+    H_full_grid_hier = pi_h1 * h_b(p_full_grid_h1) + (1 - pi_h1) * h_b(p_full_grid_h0),
+    CI_grid_hier = H_baseline_grid - H_full_grid_hier
+  ) %>%
+  ungroup()
+```
+
+### Diagnosing a negative `CI_grid_hier`
+
+The first pass at `CI_grid_hier` above (before the same Jensen's-inequality fix applied to the $S$ model) turned up negative values at $d > 0.4$. Two candidate explanations were checked before finding the actual cause, and the diagnostic trail is kept here because it generalizes to any similar pipeline.
+
+**Hypothesis 1: empty local support.** Is a negative `CI_grid_hier` explained by empty local `h_finite = TRUE` support at some grid points, forcing `pi_h1`'s `NaN` fallback to the *global* `mean(h_finite)` rather than a locally appropriate value?
+
+```{r hier-diagnostic-support}
+grid_d %>%
+  filter(CI_grid_hier < 0) %>%
+  rowwise() %>%
+  mutate(n_local_h1    = sum(pairs_df$h_finite[abs(pairs_df$d - d) <= 0.05] == TRUE),
+         n_local_total = sum(abs(pairs_df$d - d) <= 0.05)) %>%
+  ungroup() %>%
+  select(d, pi_h1, n_local_h1, n_local_total, CI_grid_hier)
+```
+
+Ruled out: `pi_h1` is a genuine local estimate throughout the negative-$CI$ region (it even reaches 1.0), not a global fallback.
+
+**Hypothesis 2: a mixture that flips composition across $d$.** `h_finite = TRUE` mixes two different populations -- same-heading pairs ($h = 0$, trivially finite, $Y = 1$ by construction, clustering at low $d$) and cross-heading pairs that merely share *some* ancestor within the search horizon ($h > 0$, $Y$ unconstrained). If that mixture's composition flips across $d$ -- mostly same-heading/$Y=1$ at low $d$, mostly cross-heading/$Y=0$ at high $d$ -- then `m_full_hier`'s additive (no `d:h_finite` interaction) specification can't represent it, and the coefficient, fit mostly against the low-$d$ same-heading mass, gets extrapolated unchanged into a high-$d$ regime it doesn't describe.
+
+```{r hier-diagnostic-composition}
+pairs_df %>%
+  mutate(d_region = ifelse(d > 0.4, "d > 0.4", "d <= 0.4")) %>%
+  filter(h_finite) %>%
+  group_by(d_region) %>%
+  summarise(n = n(), prop_same_heading = mean(S == 1), mean_Y = mean(Y), .groups = "drop")
+```
+
+Confirmed: `h_finite = TRUE` does flip from mostly same-heading/$Y=1$ at low $d$ to mostly cross-heading/$Y=0$ at high $d$. That motivates testing whether letting `h_finite`'s effect vary with $d$ (a `d * h_finite` interaction) shrinks or removes the negative-$CI$ region.
+
+```{r hier-interaction-model}
+m_full_hier_int <- logistf(Y ~ d * h_finite, data = pairs_df)
+summary(m_full_hier_int)
+
+grid_d_int <- grid_d %>%
+  mutate(
+    p_h0_int   = plogis(predict(m_full_hier_int, newdata = mutate(grid_d, h_finite = FALSE), type = "link")),
+    p_h1_int   = plogis(predict(m_full_hier_int, newdata = mutate(grid_d, h_finite = TRUE),  type = "link")),
+    H_full_int = pi_h1 * h_b(p_h1_int) + (1 - pi_h1) * h_b(p_h0_int),
+    CI_grid_hier_int = H_baseline_grid - H_full_int
+  )
+
+message(sprintf(
+  "Additive model:    %d/%d grid points with d > 0.4 have CI_grid_hier < 0 (min = %.4f)",
+  sum(grid_d$CI_grid_hier[grid_d$d > 0.4] < 0, na.rm = TRUE),
+  sum(grid_d$d > 0.4),
+  min(grid_d$CI_grid_hier[grid_d$d > 0.4], na.rm = TRUE)
+))
+message(sprintf(
+  "Interaction model: %d/%d grid points with d > 0.4 have CI_grid_hier < 0 (min = %.4f)",
+  sum(grid_d_int$CI_grid_hier_int[grid_d_int$d > 0.4] < 0, na.rm = TRUE),
+  sum(grid_d_int$d > 0.4),
+  min(grid_d_int$CI_grid_hier_int[grid_d_int$d > 0.4], na.rm = TRUE)
+))
+```
+
+Neither the model's functional form (additive vs. interaction) nor the estimation method (unpenalized `glm` vs. Firth, checked below) turns out to be the driver:
+
+```{r hier-firth-baseline-check}
+m_baseline_firth <- logistf(Y ~ d, data = pairs_df)
+
+grid_d_firthbase <- grid_d %>%
+  mutate(
+    p_baseline_firth       = plogis(predict(m_baseline_firth, newdata = grid_d, type = "link")),
+    H_baseline_firth       = h_b(p_baseline_firth),
+    CI_grid_hier_firthbase = H_baseline_firth - H_full_grid_hier
+  )
+
+message(sprintf(
+  "Firth/Firth comparison: %d/%d grid points with d > 0.4 have CI < 0 (min = %.4f)",
+  sum(grid_d_firthbase$CI_grid_hier_firthbase[grid_d_firthbase$d > 0.4] < 0, na.rm = TRUE),
+  sum(grid_d_firthbase$d > 0.4),
+  min(grid_d_firthbase$CI_grid_hier_firthbase[grid_d_firthbase$d > 0.4], na.rm = TRUE)
+))
+```
+
+**Root cause, confirmed by ruling out the two hypotheses above:** `CI_grid_hier` uses `H_baseline_grid` from `m_baseline`, a model fit independently of `m_full_hier_firth`. Jensen's inequality only guarantees non-negativity when $H(Y\mid d)$ is the entropy of that *same* model's own `h_finite`-marginalized mixture probability, not an independently-estimated stand-in -- exactly the structural mismatch already diagnosed and fixed for the $S$ model. The fix is the same: compute $H(Y \mid d)$ from `m_full_hier_firth`'s own mixture probability (`p_mix_hier`) rather than from `m_baseline`. This reduces the negative region from 85/85 grid points at $d > 0.4$ to 0/85.
+
+```{r hier-ci-grid-corrected}
+grid_d <- grid_d %>%
+  mutate(
+    p_mix_hier      = pi_h1 * p_full_grid_h1 + (1 - pi_h1) * p_full_grid_h0,
+    H_true_hier     = h_b(p_mix_hier),
+    CI_grid_hier_v2 = H_true_hier - H_full_grid_hier
+  )
+```
+
+### Comparing the $S$-based and `hier_distance`-based estimates
+
+```{r hier-plot}
+p_ci_hier <- ggplot(grid_d, aes(d, CI_grid_hier_v2)) +
+  geom_line() +
+  geom_point(data = ci_piecewise_hier, aes(x_mid, CI_k_hier_v2), inherit.aes = FALSE) +
+  labs(x = "BERT cosine distance (d)", y = "CI(d), bits",
+       title = "hier_distance (h_finite)")
+
+p_ci_hier
+```
+
+The two panels below share a y-axis range -- otherwise each would auto-scale to its own data, and a visual comparison of *magnitude* between the two predictors would be misleading even though each panel's shape would still be individually correct.
+
+```{r compare-side-by-side}
+#| fig-width: 10
+
+ci_vals <- c(grid_d$CI_grid_v2, grid_d$CI_grid_hier_v2,
+             ci_piecewise$CI_k_v2, ci_piecewise_hier$CI_k_hier_v2)
+shared_ylim <- range(ci_vals[is.finite(ci_vals)])
+
+p_ci_compare <-
+  (p_ci_S    + coord_cartesian(ylim = shared_ylim)) |
+  (p_ci_hier + coord_cartesian(ylim = shared_ylim))
+p_ci_compare <- p_ci_compare +
+  plot_annotation(title = "CI(d): S (same_heading) vs. hier_distance (h_finite)")
+
+p_ci_compare
+```
+
+An overlay puts both series on one set of axes, distinguished by color, so both $CI(d)$ values can be read off at the same $d$ directly instead of eyeballing across two panels. `linetype` and `shape` are each mapped to a single descriptive string -- there is only one line style and one point shape in use -- which is the standard ggplot idiom for adding a labeled legend key to a constant aesthetic. Point size is bumped up from the 1.5 default so the piecewise estimates aren't visually dominated by the line.
+
+```{r compare-overlay}
+grid_compare <- bind_rows(
+  grid_d %>% transmute(d, CI = CI_grid_v2,      model = "S (same_heading)"),
+  grid_d %>% transmute(d, CI = CI_grid_hier_v2, model = "hier_distance (h_finite)")
+)
+piecewise_compare <- bind_rows(
+  ci_piecewise      %>% transmute(x_mid, CI = CI_k_v2,      model = "S (same_heading)"),
+  ci_piecewise_hier %>% transmute(x_mid, CI = CI_k_hier_v2, model = "hier_distance (h_finite)")
+)
+
+p_ci_overlay <- ggplot(grid_compare, aes(d, CI, color = model)) +
+  geom_line(aes(linetype = "Smooth curve (model-implied)")) +
+  geom_point(data = piecewise_compare,
+             aes(x_mid, CI, color = model, shape = "Piecewise estimate (binned)"),
+             inherit.aes = FALSE, size = 3.5) +
+  labs(x = "BERT cosine distance (d)", y = "CI(d), bits",
+       color = "Predictor", linetype = NULL, shape = NULL,
+       title = "CI(d): S (same_heading) vs. hier_distance (h_finite)") +
+  guides(shape = guide_legend(override.aes = list(size = 3.5)))
+
+p_ci_overlay
+```
+
+### Pointwise cognitive information for the `hier_distance` model
+
+Same pattern as [Step 4](#step-4-pointwise-cognitive-information-pci_i): `pCI_hier` uses `p_baseline_obs` (unchanged from the $S$-based block) as its marginal reference, and `pCI_hier_v2` corrects this to `p_bar_full_hier` (the `h_finite`-marginalized full model's own bin-mean probability, from `ci_piecewise_hier`) so it stays internally consistent with `CI_k_hier_v2` rather than carrying a residual KL-divergence bias from `m_baseline`'s local misspecification.
+
+```{r hier-pointwise-ci}
+pairs_df <- pairs_df %>%
+  mutate(
+    p_full_hier_obs = ifelse(Y == 1, p_full_hier, 1 - p_full_hier),
+    pCI_hier        = log2(p_full_hier_obs / p_baseline_obs)
+  ) %>%
+  left_join(ci_piecewise_hier %>% select(distance_bin, p_bar_full_hier), by = "distance_bin") %>%
+  mutate(
+    p_marginal_hier_obs = ifelse(Y == 1, p_bar_full_hier, 1 - p_bar_full_hier),
+    pCI_hier_v2         = log2(p_full_hier_obs / p_marginal_hier_obs)
+  )
+```
+
+```{r hier-consistency-check}
+consistency_check_hier <- pairs_df %>%
+  group_by(distance_bin) %>%
+  summarise(mean_pCI_hier_v2 = mean(pCI_hier_v2), .groups = "drop") %>%
+  left_join(ci_piecewise_hier, by = "distance_bin") %>%
+  mutate(diff = mean_pCI_hier_v2 - CI_k_hier_v2)
+
+consistency_check_hier
+```
+
+Unlike the $S$-based ranking, this one is a genuine heading-reform-style diagnostic for this file, since `h_finite` is not definitionally tied to $Y$ the way $S$ is.
+
+```{r hier-most-negative}
+pairs_df %>%
+  select(pair_id, word, ambiguity_type, Y, S, h, h_finite, d, pCI_hier, pCI_hier_v2) %>%
+  arrange(pCI_hier_v2) %>%
+  slice_head(n = 10)
+```
+
+### Expected cognitive information and warrant efficiency (`hier_distance` model)
+
+```{r hier-expected-ci}
+CI_bar_hier  <- with(ci_piecewise_hier, sum(P_d * CI_k_hier_v2))
+eta_bar_hier <- CI_bar_hier / with(ci_piecewise_hier, sum(P_d * H_bar_d_mix_hier))
+
+message(sprintf("Expected cognitive information (hier_distance model), CI-bar = %.4f bits", CI_bar_hier))
+message(sprintf("Warrant efficiency (hier_distance model), eta-bar = %.4f", eta_bar_hier))
+```
+
+### Where does each predictor's $CI(d)$ peak?
+
+```{r ci-peaks}
+tibble(
+  predictor = c("S (same_heading)", "hier_distance (h_finite)"),
+  d_at_peak = c(grid_d$d[which.max(grid_d$CI_grid_v2)],
+                grid_d$d[which.max(grid_d$CI_grid_hier_v2)]),
+  peak_bits = c(max(grid_d$CI_grid_v2), max(grid_d$CI_grid_hier_v2))
+)
+```
+
+### Which pairs does the `hier_distance` correction newly flag?
+
+The corrected `pCI_hier_v2` and the naive rule "$h$ finite and $Y=0$" mostly, but not entirely, agree on which pairs look anomalous. The blocks below characterize exactly where they diverge -- useful for deciding which pairs, if any, belong among a manuscript's named examples.
+
+```{r hier-negative-set-comparison}
+neg_v2 <- pairs_df$pCI_hier_v2 < 0
+hy0    <- pairs_df$h_finite & (pairs_df$Y == 0)
+
+sum(neg_v2)        # pairs negative under the corrected pCI_hier_v2
+sum(hy0)           # pairs with h finite and Y = 0 (the naive rule)
+sum(neg_v2 != hy0) # 0 if the two sets match exactly
+```
+
+```{r hier-newly-negative}
+# Pairs newly flagged as negative under pCI_hier_v2 that weren't part of the
+# naive (h_finite = TRUE & Y = 0) characterization:
+new_negatives <- pairs_df %>%
+  filter(pCI_hier_v2 < 0, !(h_finite & Y == 0))
+table(h_finite = new_negatives$h_finite, Y = new_negatives$Y)
+```
+
+```{r hier-dropped}
+# Pairs that WERE in the naive group but are no longer flagged:
+dropped <- pairs_df %>%
+  filter(!(pCI_hier_v2 < 0), h_finite, Y == 0)
+
+nrow(dropped)
+dropped %>% select(pair_id, word, h, d, pCI_hier, pCI_hier_v2)
+```
+
+```{r hier-most-negative-new}
+# The most negative pairs among the newly-flagged set:
+new_negatives %>%
+  arrange(pCI_hier_v2) %>%
+  slice_head(n = 10) %>%
+  select(pair_id, word, h_finite, Y, h, d, pCI_hier_v2)
+```
+
+## Saving output
+
+Two different things are saved here: (a) the analysis-ready tables and fitted model objects, so downstream work (plots, the write-up, re-checking a number later) doesn't require re-running the whole pipeline -- re-fitting `m_full_firth` via `logistf()` is the slow step -- and (b) LaTeX-ready table code for dropping directly into the manuscript.
+
+Output is written to `cognitive-warrant-pipeline_output/`, a directory alongside this page (not tracked in the repository -- see `.gitignore`), so re-rendering never clobbers a previous run's `pipeline_output/` under `data/processed/`.
+
+```{r save-output}
+out_dir <- "cognitive-warrant-pipeline_output"
+dir.create(out_dir, showWarnings = FALSE)
+
+# --- Plots, as PNG ---
+ggsave(file.path(out_dir, "p_ci_overlay.png"), plot = p_ci_overlay,
+       width = 7, height = 5, units = "in", dpi = 300)
+ggsave(file.path(out_dir, "p_ci_hier.png"), plot = p_ci_hier,
+       width = 7, height = 5, units = "in", dpi = 300)
+
+# --- Tables, as CSV (for re-use, e.g. in a separate plotting script) ---
+write_csv(pairs_df,               file.path(out_dir, "pairs_df_full.csv"))
+write_csv(ci_piecewise,           file.path(out_dir, "ci_piecewise_S.csv"))
+write_csv(ci_piecewise_hier,      file.path(out_dir, "ci_piecewise_hier.csv"))
+write_csv(consistency_check,      file.path(out_dir, "consistency_check_S.csv"))
+write_csv(consistency_check_hier, file.path(out_dir, "consistency_check_hier.csv"))
+
+# --- Fitted model objects, as .rds (cheap to reload; avoids re-fitting) ---
+saveRDS(m_baseline,        file.path(out_dir, "m_baseline.rds"))
+saveRDS(m_full_glm,        file.path(out_dir, "m_full_glm.rds"))        # quasi-separated glm, S -- kept for the record
+saveRDS(m_full_firth,      file.path(out_dir, "m_full_firth.rds"))      # Firth refit, S -- used for p_full
+saveRDS(m_full_hier,       file.path(out_dir, "m_full_hier.rds"))       # quasi-separated glm, h_finite -- LRT only
+saveRDS(m_full_hier_firth, file.path(out_dir, "m_full_hier_firth.rds")) # Firth refit, h_finite -- used for p_full_hier
+# Reload later with e.g. m_full_firth <- readRDS("cognitive-warrant-pipeline_output/m_full_firth.rds")
+
+# --- Key scalars, in case only the headline numbers are needed ---
+summary_scalars <- tibble(
+  quantity = c("CI_bar_S", "eta_bar_S", "CI_bar_hier", "eta_bar_hier",
+               "same_vs_heading_agreement"),
+  value    = c(CI_bar, eta_bar, CI_bar_hier, eta_bar_hier, same_vs_heading)
+)
+write_csv(summary_scalars, file.path(out_dir, "summary_scalars.csv"))
+
+message(sprintf("All pipeline outputs written to: %s", normalizePath(out_dir)))
+```
+
+The LaTeX table code below populates the `Table~\ref{tab:ci-bar-schematic}`-style placeholders in the Chapter 5 source with the piecewise cognitive-information tables computed above (the corrected `CI_k_v2` / `CI_k_hier_v2` columns).
+
+```{r latex-tables}
+#| results: hide
+
+ci_bar_latex <- ci_piecewise %>%
+  transmute(
+    Bin           = distance_bin,
+    `$n_k$`       = n_pairs,
+    `$\\widehat{CI}_k$ (bits)` = round(CI_k_v2, 4),
+    `$P(d \\in k)$`            = round(P_d, 4),
+    Contribution               = round(P_d * CI_k_v2, 4)
+  ) %>%
+  kable(format = "latex", booktabs = TRUE, escape = FALSE,
+        caption = "Piecewise cognitive information, S-based full model.")
+
+writeLines(ci_bar_latex, file.path(out_dir, "ci_bar_table_S.tex"))
+
+ci_bar_latex_hier <- ci_piecewise_hier %>%
+  transmute(
+    Bin           = distance_bin,
+    `$n_k$`       = n_pairs,
+    `$\\widehat{CI}_k$ (bits)` = round(CI_k_hier_v2, 4),
+    `$P(d \\in k)$`            = round(P_d, 4),
+    Contribution               = round(P_d * CI_k_hier_v2, 4)
+  ) %>%
+  kable(format = "latex", booktabs = TRUE, escape = FALSE,
+        caption = "Piecewise cognitive information, hier\\_distance-based full model.")
+
+writeLines(ci_bar_latex_hier, file.path(out_dir, "ci_bar_table_hier.tex"))
+```
+
+---
+
+The underlying R source for this page lives at [`src/analysis/cognitive_warrant_pipeline_decluttered_version_of_update2.R`](https://github.com/nicholasmeister/lcsh_polysemy_capstone/blob/main/src/analysis/cognitive_warrant_pipeline_decluttered_version_of_update2.R) and can be run as a standalone script (`Rscript`) for a plain console transcript, or knit directly from this `.qmd`. Questions and feedback are welcome at [nicholas.meister@du.edu](mailto:nicholas.meister@du.edu).

@@ -1,0 +1,58 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "index.qmd"
+    - "pages/*.qmd"
+
+website:
+  title: "Cognitive Warrant & LCSH: Research Hub"
+  description: "Capstone research materials for Nick Meister, MLIS 2026, University of Denver"
+  favicon: assets/img/favicon.png          # optional; add a small icon if you want one
+  repo-url: https://github.com/nicholasmeister/cognitive-warrant
+  repo-actions: [issue]
+
+  navbar:
+    background: "#8C2633"                  # DU crimson
+    foreground: "#FFFFFF"
+    title: "Cognitive Warrant & LCSH"
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: pages/manuscript.qmd
+        text: Research Document
+      - text: Materials
+        menu:
+          - href: pages/irb.qmd
+            text: IRB Packet
+          - href: pages/presentation.qmd
+            text: Presentation
+          - href: pages/cognitive-warrant-pipeline.qmd
+            text: Analytic Pipeline
+
+      
+
+  sidebar: false
+
+  page-footer:
+    left: "Nick Meister · MLIS 2026 · University of Denver"
+    right: "Built with [Quarto](https://quarto.org)"
+    background: "#1a1a1a"
+
+format:
+  html:
+    theme:
+      light: [flatly, assets/custom.scss]   # see Phase 4 for custom.scss
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    highlight-style: github
+    code-fold: true
+    code-tools: true
+    smooth-scroll: true
+    link-external-icon: true
+    link-external-newwindow: true
+
+execute:
+  freeze: auto                              # only re-execute chunks when source changes
+  cache: true

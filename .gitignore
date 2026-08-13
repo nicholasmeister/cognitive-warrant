@@ -1,0 +1,47 @@
+############################################
+# OS files
+############################################
+.DS_Store
+Thumbs.db
+
+############################################
+# R
+############################################
+.Rhistory
+.RData
+.Rproj.user/
+
+############################################
+# Quarto build byproducts (source-tree side)
+############################################
+/.quarto/
+/_freeze/
+*_cache/
+*_files/
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.synctex.gz
+**/*.quarto_ipynb
+
+# ...but docs/ is the built site GitHub Pages serves, so figure/asset
+# directories Quarto drops there (e.g. docs/pages/*_files/) must stay tracked.
+# (docs/ itself is intentionally NOT ignored -- GitHub Pages serves it.)
+!docs/**/*_files/
+!docs/**/*_files/**
+
+############################################
+# Output written by re-rendering pages/cognitive-warrant-pipeline.qmd
+############################################
+pages/cognitive-warrant-pipeline_output/
+
+############################################
+# Python
+############################################
+__pycache__/
+*.pyc
+.venv/
+venv/

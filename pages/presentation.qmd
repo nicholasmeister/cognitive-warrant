@@ -1,0 +1,27 @@
+---
+title: "Capstone Presentation"
+---
+
+## Overview
+
+This page collects documents related to the Capstone presentation I gave to MLIS faculty on June 2, 2026. PNG files of experimental mockups used in the presentation can be found on the [IRB Packet](irb.qmd) page. 
+
+## Documents
+
+::: {.file-card}
+[📄 Presentation slides](../assets/pdf/presentation_deck.pdf)
+:::
+
+::: {.file-card}
+[📄 Poster: LCSH hierarchical subgraph structure](../assets/pdf/lcsh_subgraph.pdf)
+
+This shows real examples from Trott and Bergen's stimuli mapped to LCSH. It is the result of a computational pipeline from raw source data to usable graph. The Library of Congress MADS/RDF bulk download — about 330,000 records — was parsed in Python and represented using NetworkX. Each broader term relationship of a subject authority record becomes a directed edge. The result is a directed acyclic graph that supports all the Lowest Common Ancestor algorithms needed for hierarchical distance computation.
+:::
+
+::: {.file-card}
+[📄 Poster: The intellectual landscape of cognitive warrant](../assets/pdf/intellectual_landscape_of_cognitive_warrant.pdf)
+
+Presents the intellectual landscape my research draws from. Each cluster represents a field: knowledge organization, computational semantics, formal foundations (graph theory, information theory, and statistics), psycholinguistics, cognitive science, and research methodology. The central node is cognitive warrant itself. What makes this research distinctive is not just that it touches these fields — it's that the argument requires all of them simultaneously. No single field contains the tools to answer the question.
+:::
+
+

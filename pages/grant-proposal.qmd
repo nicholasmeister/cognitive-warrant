@@ -1,0 +1,23 @@
+---
+title: "Cognitive Neuroscience Grant Proposal"
+---
+
+## Overview
+
+This was the main assignment in my cognitive neuroscience graduate seminar -- a grant proposal for a hypothetical research project. This is where I first came across Trott and Bergen (2023), and the proposal is a (novice) attempt at validating their hybrid meaning theory with magnetoencephalography (MEG). I didn't even know MEG existed before the seminar, but I learned so much about the primary methods and key experimental findings associated with cognitive neuroscience. Needless to say, this was offered by the DU Psychology Department, not the MLIS program. I was very fortunate to get approval to count it as an elective towards my degree. Cognitive warrant and its engagement with LCSH is a direct result of this seminar. 
+
+Please note that formatting guidelines for National Institutes of Health grant proposals are strict: specific aims limited to one page (single-spaced), research strategy (background, significance, approach) limited to six pages (single-spaced), but no page limit on references.
+
+## Documents
+
+::: {.file-card}
+[📄 Cognitive Neuroscience Grant Proposal (PDF)](../assets/pdf/cog_neuro_grant_proposal.pdf)
+:::
+
+::: {.file-card}
+[📄 Trott and Bergen (2023) original article (PDF)](../assets/pdf/trott_bergen_2023.pdf)
+:::
+
+
+
+

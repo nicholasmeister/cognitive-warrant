@@ -1,0 +1,42 @@
+---
+title: "Research Hub for Cognitive Warrant and the Empirical Evaluation of LCSH"
+author: "Nick Meister"
+date: "July 28, 2026"
+---
+
+## About This Project
+
+This site organizes materials related to my LIS 4901 capstone project, *Cognitive Warrant: A Theoretical Framework for Evaluating Semantic Alignment in Knowledge Organization Systems*, as part of my requirements for the Master of Library and Information Science (MLIS) degree at the University of Denver.
+
+The project investigates whether the categorical and hierarchical structures of the Library of Congress Subject Headings (LCSH) 
+correspond to measurable patterns in our semantic cognition. Substituting LCSH boundaries for dictionary-derived sense boundaries, the study replicates the primed sensibility judgment paradigm of Trott and Bergen (2023) and extends their hybrid meaning theory through a novel heading appropriateness rating paradigm.
+
+
+>Knowledge organization systems do not merely describe the world -- they impose structure on how users encounter it.
+>
+>The purpose of this study is to develop and empirically evaluate the concept of cognitive warrant as a principle for knowledge organization, defined as the extent to which the categorical and structural distinctions encoded in a knowledge organization system correspond to observable patterns in human semantic processing.
+>
+>Cognitive warrant, therefore, becomes a falsifiable claim: that professionally imposed boundaries track psychologically meaningful partitions in semantic space.
+>
+>Cognitive warrant positions knowledge organization research to engage empirically with the semantic processing and cognitive structure of the users library discovery systems are designed to serve.
+
+
+## Site Contents
+
+| Section | Contents |
+|---|---|
+| [Research Document](pages/manuscript.qmd) | This document contains material from my larger cognitive warrant research project. (The LIS 4901 Capstone paper was a *very* distilled version of that document.) It is a deliberate editorial selection from the full architecture, retaining the experimental design, statistical analysis plan, and theoretical contributions most relevant to a psycholinguistics audience while condensing material whose primary audience is library and information science (I am currently organizing the LIS version). |
+| [Presentation Deck](pages/presentation.qmd) | The slides from my Capstone presentation to MLIS faculty. |
+| [IRB Packet](pages/irb.qmd) | Complete IRB exempt certification application materials. |
+| [Summary Documents](pages/summary-documents.qmd) | These are two documents I created to explain simply what my capstone project was trying to accomplish. They might be helpful for those without an LIS background.|
+| [HLM Analysis](pages/hlm-analysis.qmd) | This was an assignment in my Hierarchical Linear Models (HLM) course, requiring students to critique an empirical research article that utilizes HLM. Naturally, I took this opportunity to better understand the methodology of Trott and Bergen (2023).|
+| [Cognitive Warrant Analytic Pipeline](pages/cognitive-warrant-pipeline.qmd) | An executable, narrated walkthrough of the research document's Chapter 5 proof-of-concept analysis -- logistic regression, entropy, and cognitive information -- with all code visible for transparency and reproducibility. |
+| [Grant Proposal](pages/grant-proposal.qmd) | This was the main assignment in my cognitive neuroscience graduate seminar -- a grant proposal for a hypothetical research project. This is where I first came across Trott and Bergen (2023), and the proposal is an attempt at validating their hybrid meaning theory with magnetoencephalography (MEG).|
+
+: {tbl-colwidths="[20,80]"}
+
+
+
+
+I very much welcome questions and feedback about any of the content here. Please contact me at [nicholas.meister@du.edu](mailto:nicholas.meister@du.edu). 
+

@@ -1,0 +1,39 @@
+/*-- scss:defaults --*/
+$primary:        #8C2633;   /* DU crimson */
+$secondary:      #C8952C;   /* DU gold */
+$link-color:     #8C2633;
+$font-family-sans-serif: "Georgia", serif;  /* academic feel */
+
+/*-- scss:rules --*/
+
+/* Navbar accent */
+.navbar {
+  border-bottom: 3px solid #C8952C;
+}
+
+/* Page title styling */
+h1.title {
+  color: #8C2633;
+  border-bottom: 2px solid #C8952C;
+  padding-bottom: 0.4em;
+}
+
+/* File download cards */
+.file-card {
+  border: 1px solid #dee2e6;
+  border-left: 4px solid #8C2633;
+  padding: 0.8em 1em;
+  margin-bottom: 0.8em;
+  border-radius: 3px;
+  background: #fafafa;
+}
+
+.file-card a {
+  font-weight: 600;
+  color: #8C2633;
+}
+
+/* Callout box override to use DU colors */
+.callout-note {
+  border-left-color: #C8952C !important;
+}

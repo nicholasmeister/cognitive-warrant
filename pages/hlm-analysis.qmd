@@ -1,0 +1,17 @@
+---
+title: "Analysis of an HLM Article"
+---
+
+## Overview
+
+It was quite serendipitous that a Hierarchical Linear Models (HLM) course was offered in the Spring 2026 quarter. The repeated measurements research design used by Trott and Bergen (2023) was analyzed using HLM. When I first encountered their article in the cognitive neuroscience seminar in the Fall 2025 quarter, I had no experience with HLM. The Research Methods and Statistics course assignment required students to critique an empirical research article that utilizes HLM. Naturally, I took this opportunity to better understand the Trott and Bergen's methodology and thus improve the methodology of my cognitive warrant research.
+
+
+::: {.file-card}
+[📄 HLM Article Analysis (PDF)](../assets/pdf/rms4915_article_critique.pdf)
+:::
+
+::: {.file-card}
+[📄 Trott and Bergen (2023) original article (PDF)](../assets/pdf/trott_bergen_2023.pdf)
+:::
+

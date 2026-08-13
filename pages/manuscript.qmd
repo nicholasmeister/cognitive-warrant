@@ -1,0 +1,62 @@
+---
+title: "Cognitive Warrant Research Document"
+---
+
+## Document
+
+::: {.file-card}
+[📄 Meister — Cognitive Warrant (PDF)](../assets/pdf/meister_cognitive_warrant.pdf)
+
+From Literary Warrant to Cognitive Warrant: Extending Hybrid Meaning Theory to Professionally Imposed Categorical Boundaries
+
+Version 2.5.3 --- Last revised: August 13, 2026 --- [Change log](change-log.qmd)
+:::
+
+## About This Document
+
+This document contains material from my larger cognitive research project. (The LIS 4901 Capstone paper was a *very* distilled version of that document.) It is a deliberate editorial selection from the full architecture, retaining the experimental design, statistical analysis plan, and theoretical contributions most relevant to a psycholinguistics audience while condensing material whose primary audience is library and information science (I am currently organizing the LIS version). Please note that this document continues to be updated; you can find the version number and last revised date on the title page.
+
+The interdisciplinary nature of my research tends to result in any document drawing simultaneously on several distinct fields of inquiry. No single reader is likely to arrive fluent in all of them; most will be expert in one, two, or three and unfamiliar with the others (I myself am certainly not an expert in most). 
+
+Cognitive warrant (in its iteration in this research document) integrates seven distinct knowledge domains. The table below names each area and identifies the specific construct from that area the framework imports.
+
+(I am working on a document to cover the prerequisite terrain for each field and provide a curated, centralized reading to bring a motivated reader to the threshold of genuine engagement with the research document. The goal is not exhaustive coverage of any area but to provide the minimum working fluency required to follow the argument.)
+
+
+| Area | Key Constructs Imported |
+|-----|-----|
+| Library and Information Science (LIS) & Knowledge Organization (KO) | Literary and user warrant; controlled vocabularies; Library of Congress Subject Headings (LCSH) authority record structure; Metadata Authority Description Schema/Resource Description Framework (MADS/RDF); library discovery systems; information (searching) behavior |
+| Lexical Semantics & Psycholinguistics | Polysemes, homonyms, synonyms, and hyponyms; hybrid meaning theory (Trott & Bergen, 2023); primed sensibility judgment task |
+| Distributional Semantics & Natural Language Processing (NLP) | BERT contextual embeddings; cosine distance as continuous semantic proxy; surprisal (context-dependent lexical predictability) |
+| Information Theory (Shannon, 1948) | Entropy; binary entropy function; (conditional) mutual information; conditional independence; Jensen’s inequality |
+| Graph Theory | Directed Acyclic Graphs (DAG); path distance and lowest common ancestor; implementation in NetworkX |
+| Statistical Modeling | Logistic regression; cross-classified mixed-effects models; likelihood ratio test; natural spline interaction; generalized additive model; Firth’s penalized-likelihood refit |
+| Philosophy of science | (Chang, 2004; Trott & Parkinson-Coombs, 2026): construct validity; the problem of nomic measurement; epistemic iteration |
+
+
+## Related Documents
+
+::: {.file-card}
+[📄 Trott and Bergen (2023) original article (PDF)](../assets/pdf/trott_bergen_2023.pdf)
+
+Trott, S., & Bergen, B. (2023). Word meaning is both categorical and continuous. Psychological Review, 130(5), 1239–1261. https://doi.org/10.1037/rev0000420
+:::
+
+::: {.file-card}
+[📄 Trott and Bergen (2023) supplementary analyses (PDF)](../assets/pdf/trott_bergen_2023_supplement.pdf)
+:::
+
+::: {.file-card}
+[📄 Trott and Parkinson-Coombs (2026) (PDF)](../assets/pdf/trott_parkinson-coombs_2026.pdf)
+
+Sean Trott and Oisín Parkinson-Coombs. 2026. Graduating the Benchmark Scale: Lessons from Thermometry. In Proceedings of the Workshop on Evaluating Evaluations (EvalEval), pages 111–115, San Diego, CA. Association for Computational Linguistics.
+:::
+
+::: {.file-card}
+[📊 Data Used in My Proof of Concept (CSV)](../assets/data/s2_trials_lcsh_distances.csv)
+
+The preliminary results reported in chapter 5 are drawn from a secondary analysis of the stimulus materials from Trott and Bergen (2023), Experiment 2, merged with a newly constructed mapping of those materials onto Library of Congress Subject Headings. This merge is recorded in the CSV file and constitutes the analytic dataset for the study's proof of concept.
+:::
+---
+
+I very much welcome questions and feedback about my research. Please contact me at [nicholas.meister@du.edu](mailto:nicholas.meister@du.edu). 
