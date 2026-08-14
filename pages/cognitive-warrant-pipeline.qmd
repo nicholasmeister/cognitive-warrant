@@ -685,9 +685,9 @@ tibble(
 )
 ```
 
-H3 states that $CI(d)$ should peak somewhere in an intermediate zone of BERT cosine distance (provisionally, $d \in [0.30, 0.60]$). 
+H3 states that $\mathrm{CI}(d)$ should peak somewhere in an intermediate zone of BERT cosine distance (provisionally, $d \in [0.30, 0.60]$). 
 
-This prediction, of course, is for the full data from Experiment 1 being run. With the stratified random sample of Trott and Bergen's data, $CI(d)$ peaks at $d = 0.190$. The range of BERT cosine distances among the sample's sentence pairs is $[0.008,0.496]$ and their mean is $0.143$, putting into better perspective the peak at $0.190$.
+This prediction, of course, is for the full data from Experiment 1 being run. With the stratified random sample of Trott and Bergen's data, $\mathrm{CI}(d)$ peaks at $d = 0.190$. The range of BERT cosine distances among the sample's sentence pairs is $[0.008,0.496]$ and their mean is $0.143$, putting into better perspective the peak at $0.190$.
 
 
 ### Which pairs does the `hier_distance` correction newly flag?
