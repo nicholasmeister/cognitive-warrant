@@ -26,7 +26,7 @@ correspond to measurable patterns in our semantic cognition. Substituting LCSH b
 | Section | Contents |
 |---|---|
 | [Research Document](pages/manuscript.qmd) | This document contains material from my larger cognitive warrant research project. (The LIS 4901 Capstone paper was a *very* distilled version of that document.) It is a deliberate editorial selection from the full architecture, retaining the experimental design, statistical analysis plan, and theoretical contributions most relevant to a psycholinguistics audience while condensing material whose primary audience is library and information science (I am currently organizing the LIS version). |
-| [Presentation Deck](pages/presentation.qmd) | The slides from my Capstone presentation to MLIS faculty. |
+| [Presentation Materials](pages/presentation.qmd) | The slides and posters from my Capstone presentation to MLIS faculty. |
 | [IRB Packet](pages/irb.qmd) | Complete IRB exempt certification application materials. |
 | [Summary Documents](pages/summary-documents.qmd) | These are two documents I created to explain simply what my capstone project was trying to accomplish. They might be helpful for those without an LIS background.|
 | [HLM Analysis](pages/hlm-analysis.qmd) | This was an assignment in my Hierarchical Linear Models (HLM) course, requiring students to critique an empirical research article that utilizes HLM. Naturally, I took this opportunity to better understand the methodology of Trott and Bergen (2023).|
@@ -38,5 +38,9 @@ correspond to measurable patterns in our semantic cognition. Substituting LCSH b
 
 
 
-I very much welcome questions and feedback about any of the content here. Please contact me at [nicholas.meister@du.edu](mailto:nicholas.meister@du.edu). 
+I very much welcome questions and feedback about any of the content here. Please contact me at [nicholas.meister@du.edu](mailto:nicholas.meister@du.edu).
+
+## License
+
+Text and code in this repository are licensed under [CC BY 4.0](https://github.com/nicholasmeister/cognitive-warrant/blob/main/LICENSE) — reuse with attribution. The included Trott and Bergen (2023) materials remain the authors' own work, reproduced here for reference; see their [published article](https://doi.org/10.1037/rev0000420) for the original terms.
 
