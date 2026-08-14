@@ -22,18 +22,18 @@ This is a deliberately curated subset of a larger private working repository. It
 │   ├── data/                # analysis-ready CSVs (see Data below)
 │   └── img/                 # survey mockups, favicon
 └── src/analysis/
-    ├── cognitive_warrant_pipeline_decluttered_version_of_update2.R
+    ├── cognitive_warrant_pipeline.R
     │                         # the R source behind pages/cognitive-warrant-pipeline.qmd
     └── get_distances.py     # builds the LCSH-augmented distance CSV (see note below)
 ```
 
 ### Data
 
-`assets/data/s2_trials_lcsh_distances.csv` merges Trott and Bergen's (2023) Experiment 2 stimulus materials with a newly constructed mapping of those materials onto LCSH authority records; it is the analytic dataset for [the proof-of-concept pipeline](https://nicholasmeister.github.io/cognitive-warrant/pages/cognitive-warrant-pipeline.html). The `tb2023_*` files are Trott and Bergen's original published materials, included here for convenience.
+`assets/data/tb2023_exp2_lcsh_distances.csv` merges Trott and Bergen's (2023) Experiment 2 stimulus materials with a newly constructed mapping of those materials onto LCSH authority records; it is the analytic dataset for [the proof-of-concept pipeline](https://nicholasmeister.github.io/cognitive-warrant/pages/cognitive-warrant-pipeline.html). The other `tb2023_*` files are Trott and Bergen's original published materials, included here for convenience.
 
-`get_distances.py` is included for methodological transparency — it documents how `s2_trials_lcsh_distances.csv` was built — but is **not runnable as-is** in this repository: its upstream inputs (the raw LCSH RDF dump, the full stimulus-to-heading mapping pipeline, and Trott and Bergen's raw trial data) live in the private working repository and are not republished here.
+`get_distances.py` is included for methodological transparency — it documents how `tb2023_exp2_lcsh_distances.csv` was built — but is **not runnable as-is** in this repository: its upstream inputs (the raw LCSH RDF dump, the full stimulus-to-heading mapping pipeline, and Trott and Bergen's raw trial data) live in the private working repository and are not republished here.
 
-The R pipeline (`cognitive_warrant_pipeline_decluttered_version_of_update2.R` / `pages/cognitive-warrant-pipeline.qmd`), by contrast, **is** fully reproducible from this repository alone — it reads only `assets/data/s2_trials_lcsh_distances.csv`.
+The R pipeline (`cognitive_warrant_pipeline.R` / `pages/cognitive-warrant-pipeline.qmd`), by contrast, **is** fully reproducible from this repository alone — it reads only `assets/data/tb2023_exp2_lcsh_distances.csv`.
 
 ## Reproducing the analysis pipeline
 
@@ -41,7 +41,7 @@ The R pipeline (`cognitive_warrant_pipeline_decluttered_version_of_update2.R` / 
 install.packages(c("tidyverse", "logistf", "lme4", "splines", "patchwork", "knitr"))
 ```
 
-Then knit `pages/cognitive-warrant-pipeline.qmd` (or `Rscript src/analysis/cognitive_warrant_pipeline_decluttered_version_of_update2.R` for a plain console transcript). See `requirements.txt` for the Python environment `get_distances.py` was written against.
+Then knit `pages/cognitive-warrant-pipeline.qmd` (or `Rscript src/analysis/cognitive_warrant_pipeline.R` for a plain console transcript). See `requirements.txt` for the Python environment `get_distances.py` was written against.
 
 ## Building the site locally
 

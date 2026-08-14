@@ -1,10 +1,7 @@
 sink("pipeline_log.txt", split = TRUE)
-# This is the "clean" version of the cognitive warrant proof of concept
-# analysis pipeline to be shared on the research website.
-# It is a edited version of cognitive_warrant_pipeline_with_update2.R
 # ================================================================
 # Cognitive Warrant Proof of Concept
-# Restructuring and analysis pipeline for s2_trials_lcsh_distances.csv
+# Restructuring and analysis pipeline for tb2023_exp2_lcsh_distances.csv
 #
 # Implements, on the real merged Experiment 2 / LCSH dataset, the pipeline
 # described in Chapter 5 ("The Analytic Pipeline: Logistic Regression and
@@ -34,7 +31,7 @@ set.seed(1226)
 
 # Set working directory (comment this out to run)
 setwd("C:/Users/nmc63/Projects/lcsh_polysemy_capstone/data/processed")
-raw <- read_csv("s2_trials_lcsh_distances.csv", show_col_types = FALSE)
+raw <- read_csv("tb2023_exp2_lcsh_distances.csv", show_col_types = FALSE)
 
 # distance_elmo_lcsh is entirely missing in this file (LCSH-anchored ELMo
 # frame was not computed) -- drop it rather than carry an all-NA column.

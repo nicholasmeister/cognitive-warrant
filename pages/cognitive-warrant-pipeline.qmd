@@ -37,12 +37,12 @@ set.seed(1226)
 
 The trial-level file inherits the repeated-measures structure of Trott and Bergen's Experiment 2: 187 subjects, each responding to a subset of stimulus pairs. This step collapses that structure down to one row per unique `(word, version_with_order)` pair, which is the unit of analysis for everything that follows.
 
-This walkthrough reads `s2_trials_lcsh_distances.csv` from `assets/data/`, the copy of the merged dataset committed to the public repository (the working copy under `data/processed/`, produced by [`get_distances.py`](https://github.com/nicholasmeister/cognitive-warrant/blob/main/src/analysis/get_distances.py), is regenerated locally and excluded from version control). Paths below are relative to this file's location in `pages/`, so the page renders correctly both locally and as part of the built site.
+This walkthrough reads `tb2023_exp2_lcsh_distances.csv` from `assets/data/`, the copy of the merged dataset committed to the public repository (the working copy under `data/processed/`, produced by [`get_distances.py`](https://github.com/nicholasmeister/cognitive-warrant/blob/main/src/analysis/get_distances.py), is regenerated locally and excluded from version control). Paths below are relative to this file's location in `pages/`, so the page renders correctly both locally and as part of the built site.
 
 ```{r load-data}
 #| message: false
 
-raw <- read_csv("../assets/data/s2_trials_lcsh_distances.csv", show_col_types = FALSE)
+raw <- read_csv("../assets/data/tb2023_exp2_lcsh_distances.csv", show_col_types = FALSE)
 
 # distance_elmo_lcsh is entirely missing in this file (the LCSH-anchored ELMo
 # frame was never computed) -- dropped rather than carried as an all-NA column.
@@ -777,4 +777,4 @@ writeLines(ci_bar_latex_hier, file.path(out_dir, "ci_bar_table_hier.tex"))
 
 ---
 
-The underlying R source for this page lives at [`src/analysis/cognitive_warrant_pipeline_decluttered_version_of_update2.R`](https://github.com/nicholasmeister/cognitive-warrant/blob/main/src/analysis/cognitive_warrant_pipeline_decluttered_version_of_update2.R) and can be run as a standalone script (`Rscript`) for a plain console transcript, or knit directly from this `.qmd`. Questions and feedback are welcome at [nicholas.meister@du.edu](mailto:nicholas.meister@du.edu).
+The underlying R source for this page lives at [`src/analysis/cognitive_warrant_pipeline.R`](https://github.com/nicholasmeister/cognitive-warrant/blob/main/src/analysis/cognitive_warrant_pipeline.R) and can be run as a standalone script (`Rscript`) for a plain console transcript, or knit directly from this `.qmd`. Questions and feedback are welcome at [nicholas.meister@du.edu](mailto:nicholas.meister@du.edu).

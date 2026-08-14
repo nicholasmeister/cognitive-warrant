@@ -16,7 +16,7 @@ Inputs:
     data/raw/polysemy_s2_final.csv        (Trott & Bergen Experiment 2 trial data)
 
 Output:
-    data/processed/s2_trials_lcsh_distances.csv
+    data/processed/tb2023_exp2_lcsh_distances.csv
 """
 
 import re
@@ -35,7 +35,7 @@ SELECTED_HEADINGS_PATH = Path("data/processed/selected_headings.csv")
 STIMULI_PATH = Path("data/raw/stimuli.csv")
 SENSE_HIER_METRICS_PATH = Path("data/processed/sense_hier_metrics.csv")
 TRIALS_PATH = Path("data/raw/polysemy_s2_final.csv")
-SAVE_PATH = Path("data/processed/s2_trials_lcsh_distances.csv")
+SAVE_PATH = Path("data/processed/tb2023_exp2_lcsh_distances.csv")
 
 ### CONSTANTS
 NBHD_THRESHOLD = 3  # "D" in the Cognitive Warrant theory
