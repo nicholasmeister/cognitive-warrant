@@ -1338,7 +1338,7 @@ Wald test = 50.39018 on 3 df, p = 6.597811e-11</code></pre>
 <pre><code>Warrant efficiency (hier_distance model), eta-bar = 0.2659</code></pre>
 </div>
 </div>
-<p>The hierarchical connectivity indicator (<span class="math inline">\(h^{\mathrm{finite}}\)</span>) predicts ground-truth sense identity above and beyond BERT cosine distance (<span class="math inline">\(\hat{\beta} = 5.303\)</span>, LRT <span class="math inline">\(\chi^2(2) = 164.75\)</span>, <span class="math inline">\(p &lt; .001\)</span>), resolving an estimated <span class="math inline">\(\overline{\mathrm{CI}}_h = 0.191\)</span> bits of residual sense-identity uncertainty per stimulus pair on average—a warrant efficiency of <span class="math inline">\(\bar\eta_h = 0.266\)</span>, just over a quarter of the disambiguation load left unresolved by continuous distance alone—providing preliminary evidence that LCSH’s DAG structure encodes cognitively meaningful distinctions.</p>
+<p>The hierarchical connectivity indicator (<span class="math inline">\(h^{\mathrm{finite}}\)</span>) predicts ground-truth sense identity above and beyond BERT cosine distance (<span class="math inline">\(\hat{\beta} = 5.303\)</span>, LRT <span class="math inline">\(\chi^2(2) = 164.75\)</span>, <span class="math inline">\(p &lt; .001\)</span>), resolving an estimated <span class="math inline">\(\overline{\mathrm{CI}}_h = 0.191\)</span> bits of residual sense-identity uncertainty per stimulus pair on average—a warrant efficiency of <span class="math inline">\(\bar\eta_h = 0.266\)</span>, just over a quarter of the disambiguation load left unresolved by continuous distance alone—<strong>providing preliminary evidence that LCSH’s DAG structure encodes cognitively meaningful distinctions</strong>.</p>
 </section>
 <section id="where-does-each-predictors-cid-peak" class="level3">
 <h3 class="anchored" data-anchor-id="where-does-each-predictors-cid-peak">Where does each predictor’s <span class="math inline">\(CI(d)\)</span> peak?</h3>
@@ -2681,137 +2681,136 @@ h_finite  1
 <span id="cb108-672"><a href="#cb108-672" aria-hidden="true" tabindex="-1"></a>$p &lt; .001$), resolving an estimated $\overline{\mathrm{CI}}_h = 0.191$ bits of</span>
 <span id="cb108-673"><a href="#cb108-673" aria-hidden="true" tabindex="-1"></a>residual sense-identity uncertainty per stimulus pair on average---a warrant</span>
 <span id="cb108-674"><a href="#cb108-674" aria-hidden="true" tabindex="-1"></a>efficiency of $\bar\eta_h = 0.266$, just over a quarter of the disambiguation</span>
-<span id="cb108-675"><a href="#cb108-675" aria-hidden="true" tabindex="-1"></a>load left unresolved by continuous distance alone---providing preliminary</span>
-<span id="cb108-676"><a href="#cb108-676" aria-hidden="true" tabindex="-1"></a>evidence that LCSH's DAG structure encodes cognitively meaningful distinctions.</span>
-<span id="cb108-677"><a href="#cb108-677" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-678"><a href="#cb108-678" aria-hidden="true" tabindex="-1"></a><span class="fu">### Where does each predictor's $CI(d)$ peak?</span></span>
-<span id="cb108-679"><a href="#cb108-679" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-680"><a href="#cb108-680" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ci-peaks}</span></span>
-<span id="cb108-681"><a href="#cb108-681" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb108-682"><a href="#cb108-682" aria-hidden="true" tabindex="-1"></a>  <span class="at">predictor =</span> <span class="fu">c</span>(<span class="st">"S (same_heading)"</span>, <span class="st">"hier_distance (h_finite)"</span>),</span>
-<span id="cb108-683"><a href="#cb108-683" aria-hidden="true" tabindex="-1"></a>  <span class="at">d_at_peak =</span> <span class="fu">c</span>(grid_d<span class="sc">$</span>d[<span class="fu">which.max</span>(grid_d<span class="sc">$</span>CI_grid_v2)],</span>
-<span id="cb108-684"><a href="#cb108-684" aria-hidden="true" tabindex="-1"></a>                grid_d<span class="sc">$</span>d[<span class="fu">which.max</span>(grid_d<span class="sc">$</span>CI_grid_hier_v2)]),</span>
-<span id="cb108-685"><a href="#cb108-685" aria-hidden="true" tabindex="-1"></a>  <span class="at">peak_bits =</span> <span class="fu">c</span>(<span class="fu">max</span>(grid_d<span class="sc">$</span>CI_grid_v2), <span class="fu">max</span>(grid_d<span class="sc">$</span>CI_grid_hier_v2))</span>
-<span id="cb108-686"><a href="#cb108-686" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb108-687"><a href="#cb108-687" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb108-675"><a href="#cb108-675" aria-hidden="true" tabindex="-1"></a>load left unresolved by continuous distance alone---**providing preliminary evidence that LCSH's DAG structure encodes cognitively meaningful distinctions**.</span>
+<span id="cb108-676"><a href="#cb108-676" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-677"><a href="#cb108-677" aria-hidden="true" tabindex="-1"></a><span class="fu">### Where does each predictor's $CI(d)$ peak?</span></span>
+<span id="cb108-678"><a href="#cb108-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-679"><a href="#cb108-679" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ci-peaks}</span></span>
+<span id="cb108-680"><a href="#cb108-680" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb108-681"><a href="#cb108-681" aria-hidden="true" tabindex="-1"></a>  <span class="at">predictor =</span> <span class="fu">c</span>(<span class="st">"S (same_heading)"</span>, <span class="st">"hier_distance (h_finite)"</span>),</span>
+<span id="cb108-682"><a href="#cb108-682" aria-hidden="true" tabindex="-1"></a>  <span class="at">d_at_peak =</span> <span class="fu">c</span>(grid_d<span class="sc">$</span>d[<span class="fu">which.max</span>(grid_d<span class="sc">$</span>CI_grid_v2)],</span>
+<span id="cb108-683"><a href="#cb108-683" aria-hidden="true" tabindex="-1"></a>                grid_d<span class="sc">$</span>d[<span class="fu">which.max</span>(grid_d<span class="sc">$</span>CI_grid_hier_v2)]),</span>
+<span id="cb108-684"><a href="#cb108-684" aria-hidden="true" tabindex="-1"></a>  <span class="at">peak_bits =</span> <span class="fu">c</span>(<span class="fu">max</span>(grid_d<span class="sc">$</span>CI_grid_v2), <span class="fu">max</span>(grid_d<span class="sc">$</span>CI_grid_hier_v2))</span>
+<span id="cb108-685"><a href="#cb108-685" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb108-686"><a href="#cb108-686" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb108-687"><a href="#cb108-687" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb108-688"><a href="#cb108-688" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb108-689"><a href="#cb108-689" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-690"><a href="#cb108-690" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-691"><a href="#cb108-691" aria-hidden="true" tabindex="-1"></a><span class="fu">### Which pairs does the `hier_distance` correction newly flag?</span></span>
-<span id="cb108-692"><a href="#cb108-692" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-693"><a href="#cb108-693" aria-hidden="true" tabindex="-1"></a>The corrected <span class="in">`pCI_hier_v2`</span> and the naive rule "$h$ finite and $Y=0$" mostly, but not entirely, agree on which pairs look anomalous. The blocks below characterize exactly where they diverge -- useful for deciding which pairs, if any, belong among a manuscript's named examples.</span>
-<span id="cb108-694"><a href="#cb108-694" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-695"><a href="#cb108-695" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hier-negative-set-comparison}</span></span>
-<span id="cb108-696"><a href="#cb108-696" aria-hidden="true" tabindex="-1"></a>neg_v2 <span class="ot">&lt;-</span> pairs_df<span class="sc">$</span>pCI_hier_v2 <span class="sc">&lt;</span> <span class="dv">0</span></span>
-<span id="cb108-697"><a href="#cb108-697" aria-hidden="true" tabindex="-1"></a>hy0    <span class="ot">&lt;-</span> pairs_df<span class="sc">$</span>h_finite <span class="sc">&amp;</span> (pairs_df<span class="sc">$</span>Y <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb108-698"><a href="#cb108-698" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-699"><a href="#cb108-699" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(neg_v2)        <span class="co"># pairs negative under the corrected pCI_hier_v2</span></span>
-<span id="cb108-700"><a href="#cb108-700" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(hy0)           <span class="co"># pairs with h finite and Y = 0 (the naive rule)</span></span>
-<span id="cb108-701"><a href="#cb108-701" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(neg_v2 <span class="sc">!=</span> hy0) <span class="co"># 0 if the two sets match exactly</span></span>
-<span id="cb108-702"><a href="#cb108-702" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb108-703"><a href="#cb108-703" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-704"><a href="#cb108-704" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hier-newly-negative}</span></span>
-<span id="cb108-705"><a href="#cb108-705" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairs newly flagged as negative under pCI_hier_v2 that weren't part of the</span></span>
-<span id="cb108-706"><a href="#cb108-706" aria-hidden="true" tabindex="-1"></a><span class="co"># naive (h_finite = TRUE &amp; Y = 0) characterization:</span></span>
-<span id="cb108-707"><a href="#cb108-707" aria-hidden="true" tabindex="-1"></a>new_negatives <span class="ot">&lt;-</span> pairs_df <span class="sc">%&gt;%</span></span>
-<span id="cb108-708"><a href="#cb108-708" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pCI_hier_v2 <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="sc">!</span>(h_finite <span class="sc">&amp;</span> Y <span class="sc">==</span> <span class="dv">0</span>))</span>
-<span id="cb108-709"><a href="#cb108-709" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">h_finite =</span> new_negatives<span class="sc">$</span>h_finite, <span class="at">Y =</span> new_negatives<span class="sc">$</span>Y)</span>
-<span id="cb108-710"><a href="#cb108-710" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb108-711"><a href="#cb108-711" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-712"><a href="#cb108-712" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hier-dropped}</span></span>
-<span id="cb108-713"><a href="#cb108-713" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairs that WERE in the naive group but are no longer flagged:</span></span>
-<span id="cb108-714"><a href="#cb108-714" aria-hidden="true" tabindex="-1"></a>dropped <span class="ot">&lt;-</span> pairs_df <span class="sc">%&gt;%</span></span>
-<span id="cb108-715"><a href="#cb108-715" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(pCI_hier_v2 <span class="sc">&lt;</span> <span class="dv">0</span>), h_finite, Y <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb108-716"><a href="#cb108-716" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-717"><a href="#cb108-717" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(dropped)</span>
-<span id="cb108-718"><a href="#cb108-718" aria-hidden="true" tabindex="-1"></a>dropped <span class="sc">%&gt;%</span> <span class="fu">select</span>(pair_id, word, h, d, pCI_hier, pCI_hier_v2)</span>
-<span id="cb108-719"><a href="#cb108-719" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb108-720"><a href="#cb108-720" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-721"><a href="#cb108-721" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hier-most-negative-new}</span></span>
-<span id="cb108-722"><a href="#cb108-722" aria-hidden="true" tabindex="-1"></a><span class="co"># The most negative pairs among the newly-flagged set:</span></span>
-<span id="cb108-723"><a href="#cb108-723" aria-hidden="true" tabindex="-1"></a>new_negatives <span class="sc">%&gt;%</span></span>
-<span id="cb108-724"><a href="#cb108-724" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pCI_hier_v2) <span class="sc">%&gt;%</span></span>
-<span id="cb108-725"><a href="#cb108-725" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb108-726"><a href="#cb108-726" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pair_id, word, h_finite, Y, h, d, pCI_hier_v2)</span>
-<span id="cb108-727"><a href="#cb108-727" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb108-728"><a href="#cb108-728" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-729"><a href="#cb108-729" aria-hidden="true" tabindex="-1"></a><span class="fu">## Saving output</span></span>
-<span id="cb108-730"><a href="#cb108-730" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-731"><a href="#cb108-731" aria-hidden="true" tabindex="-1"></a>Two different things are saved here: (a) the analysis-ready tables and fitted model objects, so downstream work (plots, the write-up, re-checking a number later) doesn't require re-running the whole pipeline -- re-fitting <span class="in">`m_full_firth`</span> via <span class="in">`logistf()`</span> is the slow step -- and (b) LaTeX-ready table code for dropping directly into the manuscript.</span>
-<span id="cb108-732"><a href="#cb108-732" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-733"><a href="#cb108-733" aria-hidden="true" tabindex="-1"></a>Output is written to <span class="in">`cognitive-warrant-pipeline_output/`</span>, a directory alongside this page (not tracked in the repository -- see <span class="in">`.gitignore`</span>), so re-rendering never clobbers a previous run's <span class="in">`pipeline_output/`</span> under <span class="in">`data/processed/`</span>.</span>
-<span id="cb108-734"><a href="#cb108-734" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-735"><a href="#cb108-735" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save-output}</span></span>
-<span id="cb108-736"><a href="#cb108-736" aria-hidden="true" tabindex="-1"></a>out_dir <span class="ot">&lt;-</span> <span class="st">"cognitive-warrant-pipeline_output"</span></span>
-<span id="cb108-737"><a href="#cb108-737" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(out_dir, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb108-738"><a href="#cb108-738" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-739"><a href="#cb108-739" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plots, as PNG ---</span></span>
-<span id="cb108-740"><a href="#cb108-740" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">file.path</span>(out_dir, <span class="st">"p_ci_overlay.png"</span>), <span class="at">plot =</span> p_ci_overlay,</span>
-<span id="cb108-741"><a href="#cb108-741" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
-<span id="cb108-742"><a href="#cb108-742" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">file.path</span>(out_dir, <span class="st">"p_ci_hier.png"</span>), <span class="at">plot =</span> p_ci_hier,</span>
-<span id="cb108-743"><a href="#cb108-743" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
-<span id="cb108-744"><a href="#cb108-744" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-745"><a href="#cb108-745" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Tables, as CSV (for re-use, e.g. in a separate plotting script) ---</span></span>
-<span id="cb108-746"><a href="#cb108-746" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(pairs_df,               <span class="fu">file.path</span>(out_dir, <span class="st">"pairs_df_full.csv"</span>))</span>
-<span id="cb108-747"><a href="#cb108-747" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(ci_piecewise,           <span class="fu">file.path</span>(out_dir, <span class="st">"ci_piecewise_S.csv"</span>))</span>
-<span id="cb108-748"><a href="#cb108-748" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(ci_piecewise_hier,      <span class="fu">file.path</span>(out_dir, <span class="st">"ci_piecewise_hier.csv"</span>))</span>
-<span id="cb108-749"><a href="#cb108-749" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(consistency_check,      <span class="fu">file.path</span>(out_dir, <span class="st">"consistency_check_S.csv"</span>))</span>
-<span id="cb108-750"><a href="#cb108-750" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(consistency_check_hier, <span class="fu">file.path</span>(out_dir, <span class="st">"consistency_check_hier.csv"</span>))</span>
-<span id="cb108-751"><a href="#cb108-751" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-752"><a href="#cb108-752" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Fitted model objects, as .rds (cheap to reload; avoids re-fitting) ---</span></span>
-<span id="cb108-753"><a href="#cb108-753" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(m_baseline,        <span class="fu">file.path</span>(out_dir, <span class="st">"m_baseline.rds"</span>))</span>
-<span id="cb108-754"><a href="#cb108-754" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(m_full_glm,        <span class="fu">file.path</span>(out_dir, <span class="st">"m_full_glm.rds"</span>))        <span class="co"># quasi-separated glm, S -- kept for the record</span></span>
-<span id="cb108-755"><a href="#cb108-755" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(m_full_firth,      <span class="fu">file.path</span>(out_dir, <span class="st">"m_full_firth.rds"</span>))      <span class="co"># Firth refit, S -- used for p_full</span></span>
-<span id="cb108-756"><a href="#cb108-756" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(m_full_hier,       <span class="fu">file.path</span>(out_dir, <span class="st">"m_full_hier.rds"</span>))       <span class="co"># quasi-separated glm, h_finite -- LRT only</span></span>
-<span id="cb108-757"><a href="#cb108-757" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(m_full_hier_firth, <span class="fu">file.path</span>(out_dir, <span class="st">"m_full_hier_firth.rds"</span>)) <span class="co"># Firth refit, h_finite -- used for p_full_hier</span></span>
-<span id="cb108-758"><a href="#cb108-758" aria-hidden="true" tabindex="-1"></a><span class="co"># Reload later with e.g. m_full_firth &lt;- readRDS("cognitive-warrant-pipeline_output/m_full_firth.rds")</span></span>
-<span id="cb108-759"><a href="#cb108-759" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-760"><a href="#cb108-760" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Key scalars, in case only the headline numbers are needed ---</span></span>
-<span id="cb108-761"><a href="#cb108-761" aria-hidden="true" tabindex="-1"></a>summary_scalars <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb108-762"><a href="#cb108-762" aria-hidden="true" tabindex="-1"></a>  <span class="at">quantity =</span> <span class="fu">c</span>(<span class="st">"CI_bar_S"</span>, <span class="st">"eta_bar_S"</span>, <span class="st">"CI_bar_hier"</span>, <span class="st">"eta_bar_hier"</span>,</span>
-<span id="cb108-763"><a href="#cb108-763" aria-hidden="true" tabindex="-1"></a>               <span class="st">"same_vs_heading_agreement"</span>),</span>
-<span id="cb108-764"><a href="#cb108-764" aria-hidden="true" tabindex="-1"></a>  <span class="at">value    =</span> <span class="fu">c</span>(CI_bar, eta_bar, CI_bar_hier, eta_bar_hier, same_vs_heading)</span>
-<span id="cb108-765"><a href="#cb108-765" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb108-766"><a href="#cb108-766" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(summary_scalars, <span class="fu">file.path</span>(out_dir, <span class="st">"summary_scalars.csv"</span>))</span>
-<span id="cb108-767"><a href="#cb108-767" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-768"><a href="#cb108-768" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"All pipeline outputs written to: %s"</span>, <span class="fu">normalizePath</span>(out_dir)))</span>
-<span id="cb108-769"><a href="#cb108-769" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb108-770"><a href="#cb108-770" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-771"><a href="#cb108-771" aria-hidden="true" tabindex="-1"></a>The LaTeX table code below populates the <span class="in">`Table~\ref{tab:ci-bar-schematic}`</span>-style placeholders in the Chapter 5 source with the piecewise cognitive-information tables computed above (the corrected <span class="in">`CI_k_v2`</span> / <span class="in">`CI_k_hier_v2`</span> columns).</span>
-<span id="cb108-772"><a href="#cb108-772" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-773"><a href="#cb108-773" aria-hidden="true" tabindex="-1"></a><span class="in">```{r latex-tables}</span></span>
-<span id="cb108-774"><a href="#cb108-774" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: hide</span></span>
-<span id="cb108-775"><a href="#cb108-775" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-776"><a href="#cb108-776" aria-hidden="true" tabindex="-1"></a>ci_bar_latex <span class="ot">&lt;-</span> ci_piecewise <span class="sc">%&gt;%</span></span>
-<span id="cb108-777"><a href="#cb108-777" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb108-778"><a href="#cb108-778" aria-hidden="true" tabindex="-1"></a>    <span class="at">Bin           =</span> distance_bin,</span>
-<span id="cb108-779"><a href="#cb108-779" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$n_k$</span><span class="st">`</span>       <span class="ot">=</span> n_pairs,</span>
-<span id="cb108-780"><a href="#cb108-780" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">widehat{CI}_k$ (bits)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(CI_k_v2, <span class="dv">4</span>),</span>
-<span id="cb108-781"><a href="#cb108-781" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$P(d </span><span class="sc">\\</span><span class="at">in k)$</span><span class="st">`</span>            <span class="ot">=</span> <span class="fu">round</span>(P_d, <span class="dv">4</span>),</span>
-<span id="cb108-782"><a href="#cb108-782" aria-hidden="true" tabindex="-1"></a>    <span class="at">Contribution               =</span> <span class="fu">round</span>(P_d <span class="sc">*</span> CI_k_v2, <span class="dv">4</span>)</span>
-<span id="cb108-783"><a href="#cb108-783" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb108-784"><a href="#cb108-784" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"latex"</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb108-785"><a href="#cb108-785" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Piecewise cognitive information, S-based full model."</span>)</span>
-<span id="cb108-786"><a href="#cb108-786" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-787"><a href="#cb108-787" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(ci_bar_latex, <span class="fu">file.path</span>(out_dir, <span class="st">"ci_bar_table_S.tex"</span>))</span>
-<span id="cb108-788"><a href="#cb108-788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-789"><a href="#cb108-789" aria-hidden="true" tabindex="-1"></a>ci_bar_latex_hier <span class="ot">&lt;-</span> ci_piecewise_hier <span class="sc">%&gt;%</span></span>
-<span id="cb108-790"><a href="#cb108-790" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb108-791"><a href="#cb108-791" aria-hidden="true" tabindex="-1"></a>    <span class="at">Bin           =</span> distance_bin,</span>
-<span id="cb108-792"><a href="#cb108-792" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$n_k$</span><span class="st">`</span>       <span class="ot">=</span> n_pairs,</span>
-<span id="cb108-793"><a href="#cb108-793" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">widehat{CI}_k$ (bits)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(CI_k_hier_v2, <span class="dv">4</span>),</span>
-<span id="cb108-794"><a href="#cb108-794" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$P(d </span><span class="sc">\\</span><span class="at">in k)$</span><span class="st">`</span>            <span class="ot">=</span> <span class="fu">round</span>(P_d, <span class="dv">4</span>),</span>
-<span id="cb108-795"><a href="#cb108-795" aria-hidden="true" tabindex="-1"></a>    <span class="at">Contribution               =</span> <span class="fu">round</span>(P_d <span class="sc">*</span> CI_k_hier_v2, <span class="dv">4</span>)</span>
-<span id="cb108-796"><a href="#cb108-796" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb108-797"><a href="#cb108-797" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"latex"</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb108-798"><a href="#cb108-798" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Piecewise cognitive information, hier</span><span class="sc">\\</span><span class="st">_distance-based full model."</span>)</span>
-<span id="cb108-799"><a href="#cb108-799" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-800"><a href="#cb108-800" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(ci_bar_latex_hier, <span class="fu">file.path</span>(out_dir, <span class="st">"ci_bar_table_hier.tex"</span>))</span>
-<span id="cb108-801"><a href="#cb108-801" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb108-802"><a href="#cb108-802" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-803"><a href="#cb108-803" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb108-804"><a href="#cb108-804" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-805"><a href="#cb108-805" aria-hidden="true" tabindex="-1"></a>The underlying R source for this page lives at <span class="co">[</span><span class="ot">`src/analysis/cognitive_warrant_pipeline.R`</span><span class="co">](https://github.com/nicholasmeister/cognitive-warrant/blob/main/src/analysis/cognitive_warrant_pipeline.R)</span> and can be run as a standalone script (<span class="in">`Rscript`</span>) for a plain console transcript, or knit directly from this <span class="in">`.qmd`</span>. Questions and feedback are welcome at <span class="co">[</span><span class="ot">nicholas.meister@du.edu</span><span class="co">](mailto:nicholas.meister@du.edu)</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb108-690"><a href="#cb108-690" aria-hidden="true" tabindex="-1"></a><span class="fu">### Which pairs does the `hier_distance` correction newly flag?</span></span>
+<span id="cb108-691"><a href="#cb108-691" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-692"><a href="#cb108-692" aria-hidden="true" tabindex="-1"></a>The corrected <span class="in">`pCI_hier_v2`</span> and the naive rule "$h$ finite and $Y=0$" mostly, but not entirely, agree on which pairs look anomalous. The blocks below characterize exactly where they diverge -- useful for deciding which pairs, if any, belong among a manuscript's named examples.</span>
+<span id="cb108-693"><a href="#cb108-693" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-694"><a href="#cb108-694" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hier-negative-set-comparison}</span></span>
+<span id="cb108-695"><a href="#cb108-695" aria-hidden="true" tabindex="-1"></a>neg_v2 <span class="ot">&lt;-</span> pairs_df<span class="sc">$</span>pCI_hier_v2 <span class="sc">&lt;</span> <span class="dv">0</span></span>
+<span id="cb108-696"><a href="#cb108-696" aria-hidden="true" tabindex="-1"></a>hy0    <span class="ot">&lt;-</span> pairs_df<span class="sc">$</span>h_finite <span class="sc">&amp;</span> (pairs_df<span class="sc">$</span>Y <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb108-697"><a href="#cb108-697" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-698"><a href="#cb108-698" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(neg_v2)        <span class="co"># pairs negative under the corrected pCI_hier_v2</span></span>
+<span id="cb108-699"><a href="#cb108-699" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(hy0)           <span class="co"># pairs with h finite and Y = 0 (the naive rule)</span></span>
+<span id="cb108-700"><a href="#cb108-700" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(neg_v2 <span class="sc">!=</span> hy0) <span class="co"># 0 if the two sets match exactly</span></span>
+<span id="cb108-701"><a href="#cb108-701" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb108-702"><a href="#cb108-702" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-703"><a href="#cb108-703" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hier-newly-negative}</span></span>
+<span id="cb108-704"><a href="#cb108-704" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairs newly flagged as negative under pCI_hier_v2 that weren't part of the</span></span>
+<span id="cb108-705"><a href="#cb108-705" aria-hidden="true" tabindex="-1"></a><span class="co"># naive (h_finite = TRUE &amp; Y = 0) characterization:</span></span>
+<span id="cb108-706"><a href="#cb108-706" aria-hidden="true" tabindex="-1"></a>new_negatives <span class="ot">&lt;-</span> pairs_df <span class="sc">%&gt;%</span></span>
+<span id="cb108-707"><a href="#cb108-707" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pCI_hier_v2 <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="sc">!</span>(h_finite <span class="sc">&amp;</span> Y <span class="sc">==</span> <span class="dv">0</span>))</span>
+<span id="cb108-708"><a href="#cb108-708" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">h_finite =</span> new_negatives<span class="sc">$</span>h_finite, <span class="at">Y =</span> new_negatives<span class="sc">$</span>Y)</span>
+<span id="cb108-709"><a href="#cb108-709" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb108-710"><a href="#cb108-710" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-711"><a href="#cb108-711" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hier-dropped}</span></span>
+<span id="cb108-712"><a href="#cb108-712" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairs that WERE in the naive group but are no longer flagged:</span></span>
+<span id="cb108-713"><a href="#cb108-713" aria-hidden="true" tabindex="-1"></a>dropped <span class="ot">&lt;-</span> pairs_df <span class="sc">%&gt;%</span></span>
+<span id="cb108-714"><a href="#cb108-714" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(pCI_hier_v2 <span class="sc">&lt;</span> <span class="dv">0</span>), h_finite, Y <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb108-715"><a href="#cb108-715" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-716"><a href="#cb108-716" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(dropped)</span>
+<span id="cb108-717"><a href="#cb108-717" aria-hidden="true" tabindex="-1"></a>dropped <span class="sc">%&gt;%</span> <span class="fu">select</span>(pair_id, word, h, d, pCI_hier, pCI_hier_v2)</span>
+<span id="cb108-718"><a href="#cb108-718" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb108-719"><a href="#cb108-719" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-720"><a href="#cb108-720" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hier-most-negative-new}</span></span>
+<span id="cb108-721"><a href="#cb108-721" aria-hidden="true" tabindex="-1"></a><span class="co"># The most negative pairs among the newly-flagged set:</span></span>
+<span id="cb108-722"><a href="#cb108-722" aria-hidden="true" tabindex="-1"></a>new_negatives <span class="sc">%&gt;%</span></span>
+<span id="cb108-723"><a href="#cb108-723" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pCI_hier_v2) <span class="sc">%&gt;%</span></span>
+<span id="cb108-724"><a href="#cb108-724" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb108-725"><a href="#cb108-725" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pair_id, word, h_finite, Y, h, d, pCI_hier_v2)</span>
+<span id="cb108-726"><a href="#cb108-726" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb108-727"><a href="#cb108-727" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-728"><a href="#cb108-728" aria-hidden="true" tabindex="-1"></a><span class="fu">## Saving output</span></span>
+<span id="cb108-729"><a href="#cb108-729" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-730"><a href="#cb108-730" aria-hidden="true" tabindex="-1"></a>Two different things are saved here: (a) the analysis-ready tables and fitted model objects, so downstream work (plots, the write-up, re-checking a number later) doesn't require re-running the whole pipeline -- re-fitting <span class="in">`m_full_firth`</span> via <span class="in">`logistf()`</span> is the slow step -- and (b) LaTeX-ready table code for dropping directly into the manuscript.</span>
+<span id="cb108-731"><a href="#cb108-731" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-732"><a href="#cb108-732" aria-hidden="true" tabindex="-1"></a>Output is written to <span class="in">`cognitive-warrant-pipeline_output/`</span>, a directory alongside this page (not tracked in the repository -- see <span class="in">`.gitignore`</span>), so re-rendering never clobbers a previous run's <span class="in">`pipeline_output/`</span> under <span class="in">`data/processed/`</span>.</span>
+<span id="cb108-733"><a href="#cb108-733" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-734"><a href="#cb108-734" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save-output}</span></span>
+<span id="cb108-735"><a href="#cb108-735" aria-hidden="true" tabindex="-1"></a>out_dir <span class="ot">&lt;-</span> <span class="st">"cognitive-warrant-pipeline_output"</span></span>
+<span id="cb108-736"><a href="#cb108-736" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(out_dir, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb108-737"><a href="#cb108-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-738"><a href="#cb108-738" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plots, as PNG ---</span></span>
+<span id="cb108-739"><a href="#cb108-739" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">file.path</span>(out_dir, <span class="st">"p_ci_overlay.png"</span>), <span class="at">plot =</span> p_ci_overlay,</span>
+<span id="cb108-740"><a href="#cb108-740" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb108-741"><a href="#cb108-741" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">file.path</span>(out_dir, <span class="st">"p_ci_hier.png"</span>), <span class="at">plot =</span> p_ci_hier,</span>
+<span id="cb108-742"><a href="#cb108-742" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb108-743"><a href="#cb108-743" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-744"><a href="#cb108-744" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Tables, as CSV (for re-use, e.g. in a separate plotting script) ---</span></span>
+<span id="cb108-745"><a href="#cb108-745" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(pairs_df,               <span class="fu">file.path</span>(out_dir, <span class="st">"pairs_df_full.csv"</span>))</span>
+<span id="cb108-746"><a href="#cb108-746" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(ci_piecewise,           <span class="fu">file.path</span>(out_dir, <span class="st">"ci_piecewise_S.csv"</span>))</span>
+<span id="cb108-747"><a href="#cb108-747" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(ci_piecewise_hier,      <span class="fu">file.path</span>(out_dir, <span class="st">"ci_piecewise_hier.csv"</span>))</span>
+<span id="cb108-748"><a href="#cb108-748" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(consistency_check,      <span class="fu">file.path</span>(out_dir, <span class="st">"consistency_check_S.csv"</span>))</span>
+<span id="cb108-749"><a href="#cb108-749" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(consistency_check_hier, <span class="fu">file.path</span>(out_dir, <span class="st">"consistency_check_hier.csv"</span>))</span>
+<span id="cb108-750"><a href="#cb108-750" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-751"><a href="#cb108-751" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Fitted model objects, as .rds (cheap to reload; avoids re-fitting) ---</span></span>
+<span id="cb108-752"><a href="#cb108-752" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(m_baseline,        <span class="fu">file.path</span>(out_dir, <span class="st">"m_baseline.rds"</span>))</span>
+<span id="cb108-753"><a href="#cb108-753" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(m_full_glm,        <span class="fu">file.path</span>(out_dir, <span class="st">"m_full_glm.rds"</span>))        <span class="co"># quasi-separated glm, S -- kept for the record</span></span>
+<span id="cb108-754"><a href="#cb108-754" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(m_full_firth,      <span class="fu">file.path</span>(out_dir, <span class="st">"m_full_firth.rds"</span>))      <span class="co"># Firth refit, S -- used for p_full</span></span>
+<span id="cb108-755"><a href="#cb108-755" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(m_full_hier,       <span class="fu">file.path</span>(out_dir, <span class="st">"m_full_hier.rds"</span>))       <span class="co"># quasi-separated glm, h_finite -- LRT only</span></span>
+<span id="cb108-756"><a href="#cb108-756" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(m_full_hier_firth, <span class="fu">file.path</span>(out_dir, <span class="st">"m_full_hier_firth.rds"</span>)) <span class="co"># Firth refit, h_finite -- used for p_full_hier</span></span>
+<span id="cb108-757"><a href="#cb108-757" aria-hidden="true" tabindex="-1"></a><span class="co"># Reload later with e.g. m_full_firth &lt;- readRDS("cognitive-warrant-pipeline_output/m_full_firth.rds")</span></span>
+<span id="cb108-758"><a href="#cb108-758" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-759"><a href="#cb108-759" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Key scalars, in case only the headline numbers are needed ---</span></span>
+<span id="cb108-760"><a href="#cb108-760" aria-hidden="true" tabindex="-1"></a>summary_scalars <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb108-761"><a href="#cb108-761" aria-hidden="true" tabindex="-1"></a>  <span class="at">quantity =</span> <span class="fu">c</span>(<span class="st">"CI_bar_S"</span>, <span class="st">"eta_bar_S"</span>, <span class="st">"CI_bar_hier"</span>, <span class="st">"eta_bar_hier"</span>,</span>
+<span id="cb108-762"><a href="#cb108-762" aria-hidden="true" tabindex="-1"></a>               <span class="st">"same_vs_heading_agreement"</span>),</span>
+<span id="cb108-763"><a href="#cb108-763" aria-hidden="true" tabindex="-1"></a>  <span class="at">value    =</span> <span class="fu">c</span>(CI_bar, eta_bar, CI_bar_hier, eta_bar_hier, same_vs_heading)</span>
+<span id="cb108-764"><a href="#cb108-764" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb108-765"><a href="#cb108-765" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(summary_scalars, <span class="fu">file.path</span>(out_dir, <span class="st">"summary_scalars.csv"</span>))</span>
+<span id="cb108-766"><a href="#cb108-766" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-767"><a href="#cb108-767" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"All pipeline outputs written to: %s"</span>, <span class="fu">normalizePath</span>(out_dir)))</span>
+<span id="cb108-768"><a href="#cb108-768" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb108-769"><a href="#cb108-769" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-770"><a href="#cb108-770" aria-hidden="true" tabindex="-1"></a>The LaTeX table code below populates the <span class="in">`Table~\ref{tab:ci-bar-schematic}`</span>-style placeholders in the Chapter 5 source with the piecewise cognitive-information tables computed above (the corrected <span class="in">`CI_k_v2`</span> / <span class="in">`CI_k_hier_v2`</span> columns).</span>
+<span id="cb108-771"><a href="#cb108-771" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-772"><a href="#cb108-772" aria-hidden="true" tabindex="-1"></a><span class="in">```{r latex-tables}</span></span>
+<span id="cb108-773"><a href="#cb108-773" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: hide</span></span>
+<span id="cb108-774"><a href="#cb108-774" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-775"><a href="#cb108-775" aria-hidden="true" tabindex="-1"></a>ci_bar_latex <span class="ot">&lt;-</span> ci_piecewise <span class="sc">%&gt;%</span></span>
+<span id="cb108-776"><a href="#cb108-776" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb108-777"><a href="#cb108-777" aria-hidden="true" tabindex="-1"></a>    <span class="at">Bin           =</span> distance_bin,</span>
+<span id="cb108-778"><a href="#cb108-778" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$n_k$</span><span class="st">`</span>       <span class="ot">=</span> n_pairs,</span>
+<span id="cb108-779"><a href="#cb108-779" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">widehat{CI}_k$ (bits)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(CI_k_v2, <span class="dv">4</span>),</span>
+<span id="cb108-780"><a href="#cb108-780" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$P(d </span><span class="sc">\\</span><span class="at">in k)$</span><span class="st">`</span>            <span class="ot">=</span> <span class="fu">round</span>(P_d, <span class="dv">4</span>),</span>
+<span id="cb108-781"><a href="#cb108-781" aria-hidden="true" tabindex="-1"></a>    <span class="at">Contribution               =</span> <span class="fu">round</span>(P_d <span class="sc">*</span> CI_k_v2, <span class="dv">4</span>)</span>
+<span id="cb108-782"><a href="#cb108-782" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb108-783"><a href="#cb108-783" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"latex"</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb108-784"><a href="#cb108-784" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Piecewise cognitive information, S-based full model."</span>)</span>
+<span id="cb108-785"><a href="#cb108-785" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-786"><a href="#cb108-786" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(ci_bar_latex, <span class="fu">file.path</span>(out_dir, <span class="st">"ci_bar_table_S.tex"</span>))</span>
+<span id="cb108-787"><a href="#cb108-787" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-788"><a href="#cb108-788" aria-hidden="true" tabindex="-1"></a>ci_bar_latex_hier <span class="ot">&lt;-</span> ci_piecewise_hier <span class="sc">%&gt;%</span></span>
+<span id="cb108-789"><a href="#cb108-789" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb108-790"><a href="#cb108-790" aria-hidden="true" tabindex="-1"></a>    <span class="at">Bin           =</span> distance_bin,</span>
+<span id="cb108-791"><a href="#cb108-791" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$n_k$</span><span class="st">`</span>       <span class="ot">=</span> n_pairs,</span>
+<span id="cb108-792"><a href="#cb108-792" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">widehat{CI}_k$ (bits)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(CI_k_hier_v2, <span class="dv">4</span>),</span>
+<span id="cb108-793"><a href="#cb108-793" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">$P(d </span><span class="sc">\\</span><span class="at">in k)$</span><span class="st">`</span>            <span class="ot">=</span> <span class="fu">round</span>(P_d, <span class="dv">4</span>),</span>
+<span id="cb108-794"><a href="#cb108-794" aria-hidden="true" tabindex="-1"></a>    <span class="at">Contribution               =</span> <span class="fu">round</span>(P_d <span class="sc">*</span> CI_k_hier_v2, <span class="dv">4</span>)</span>
+<span id="cb108-795"><a href="#cb108-795" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb108-796"><a href="#cb108-796" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"latex"</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">escape =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb108-797"><a href="#cb108-797" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Piecewise cognitive information, hier</span><span class="sc">\\</span><span class="st">_distance-based full model."</span>)</span>
+<span id="cb108-798"><a href="#cb108-798" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-799"><a href="#cb108-799" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(ci_bar_latex_hier, <span class="fu">file.path</span>(out_dir, <span class="st">"ci_bar_table_hier.tex"</span>))</span>
+<span id="cb108-800"><a href="#cb108-800" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb108-801"><a href="#cb108-801" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-802"><a href="#cb108-802" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb108-803"><a href="#cb108-803" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-804"><a href="#cb108-804" aria-hidden="true" tabindex="-1"></a>The underlying R source for this page lives at <span class="co">[</span><span class="ot">`src/analysis/cognitive_warrant_pipeline.R`</span><span class="co">](https://github.com/nicholasmeister/cognitive-warrant/blob/main/src/analysis/cognitive_warrant_pipeline.R)</span> and can be run as a standalone script (<span class="in">`Rscript`</span>) for a plain console transcript, or knit directly from this <span class="in">`.qmd`</span>. Questions and feedback are welcome at <span class="co">[</span><span class="ot">nicholas.meister@du.edu</span><span class="co">](mailto:nicholas.meister@du.edu)</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
