@@ -570,7 +570,7 @@ H3 is not merely a prediction but a *mathematical consequence* of the logistic a
 $\mathrm{CI}(d)$---*neither of which is specific to LCSH*.
 
 The regression operationalization here is not asking whether the
-peak *exists*---if the LCSH categorical congruence structure adds \textit{any} predictive value beyond continuous distance---the mathematics establishes that it must.
+peak *exists*---if the LCSH categorical congruence structure adds *any* predictive value beyond continuous distance---the mathematics establishes that it must.
 The regression instead asks whether the peak is large enough to detect
 at the study's sample size, and where in the distance continuum it falls (see below).
 Its significant nonlinear form confirms not merely an empirical pattern but the mathematical structure
