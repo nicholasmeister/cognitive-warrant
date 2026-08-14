@@ -335,7 +335,7 @@ So each peak marks a moment where the sliding window happens to graze one of the
 
 `pCI` measures how much a single pair's outcome is (dis)confirmed by the full model relative to a marginal reference, in bits:
 
-$$pCI_i = \log_2\frac{P_{\text{full}}(Y_i)}{P_{\text{marginal}}(Y_i)}$$
+$$pCI_i \equiv \log_2\frac{P(Y_i \mid d_i,\, S_i)}{P(Y_i \mid d_i)} = \log_2\frac{P_{\text{full}}(Y_i)}{P_{\text{marginal}}(Y_i)}$$
 
 The identity "$E[pCI_i \mid \text{bin } k] = CI_k$ by construction" is a claim about an in-*expectation* relationship between two log-probability terms computed from the *same* pair of reference models -- it only holds if `pCI` and `CI_k` are built from consistent models. Using `p_baseline` (from `m_baseline`, fit independently of `m_full_firth`) as the marginal reference, as in `pCI` below, introduces a residual term equal to the KL divergence between the true (mixture) distribution and `m_baseline`'s fitted distribution within each pair's bin -- not sampling noise, but a genuine, bin-varying bias that grows wherever `m_baseline` is a poor local approximation (the sparse, high-distance bins where this shows up most). `pCI_v2`, using `p_bar_full` (the full model's own bin-mean, $S$-marginalized probability, from `ci_piecewise`) as the marginal reference instead, is the internally consistent version paired with `CI_k_v2`.
 
