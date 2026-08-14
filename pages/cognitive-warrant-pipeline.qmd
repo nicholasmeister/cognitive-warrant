@@ -563,7 +563,7 @@ p_ci_hier <- ggplot(grid_d, aes(d, CI_grid_hier_v2)) +
 p_ci_hier
 ```
 
-H3 states that the magnitude of the LCSH categorical boundary effect will vary nonlinearly as a function of \texttt{distance\_bert}, such that boundary-related processing costs are strongest at intermediate semantic distances and attenuated at both low and high distances.
+H3 states that the magnitude of the LCSH categorical boundary effect will vary nonlinearly as a function of `distance_bert`, such that boundary-related processing costs are strongest at intermediate semantic distances and attenuated at both low and high distances.
 
 The most consequential implication of the information-theoretic identification of $\mathrm{CI}(d) = I(Y; S \mid d)$ is that
 H3 is not merely a prediction but a \textit{mathematical consequence} of the logistic assumption together with the algebraic properties of
@@ -685,6 +685,8 @@ tibble(
   peak_bits = c(max(grid_d$CI_grid_v2), max(grid_d$CI_grid_hier_v2))
 )
 ```
+
+
 
 ### Which pairs does the `hier_distance` correction newly flag?
 
