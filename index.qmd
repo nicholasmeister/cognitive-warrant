@@ -42,5 +42,5 @@ I very much welcome questions and feedback about any of the content here. Please
 
 ## License
 
-Text and code in this repository are licensed under [CC BY 4.0](https://github.com/nicholasmeister/cognitive-warrant/blob/main/LICENSE) — reuse with attribution. The included Trott and Bergen (2023) materials remain the authors' own work, reproduced here for reference; see their [published article](https://doi.org/10.1037/rev0000420) for the original terms.
+Text and code in this repository are licensed under [CC BY 4.0](https://github.com/nicholasmeister/cognitive-warrant/blob/main/LICENSE) — reuse with attribution. The included Trott and Bergen (2023) materials remain the authors' own work, reproduced here for reference; see their [published article](https://doi.org/10.1037/rev0000420) for the original terms. Similar terms for Trott and Parkinson-Coombs (2026); see their [paper](https://aclanthology.org/2026.evaleval-1.21/).
 
