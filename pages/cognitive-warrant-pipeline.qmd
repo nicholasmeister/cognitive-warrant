@@ -566,7 +566,7 @@ p_ci_hier
 H3 states that the magnitude of the LCSH categorical boundary effect will vary nonlinearly as a function of `distance_bert`, such that boundary-related processing costs are strongest at intermediate semantic distances and attenuated at both low and high distances.
 
 The most consequential implication of the information-theoretic identification of $\mathrm{CI}(d) = I(Y; S \mid d)$ is that
-H3 is not merely a prediction but a \textit{mathematical consequence} of the logistic assumption together with the algebraic properties of
+H3 is not merely a prediction but a *mathematical consequence* of the logistic assumption together with the algebraic properties of
 $\mathrm{CI}(d)$---*neither of which is specific to LCSH*.
 
 The regression operationalization here is not asking whether the
