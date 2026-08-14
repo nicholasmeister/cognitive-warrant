@@ -669,7 +669,7 @@ message(sprintf("Warrant efficiency (hier_distance model), eta-bar = %.4f", eta_
 The hierarchical connectivity indicator
 ($h^{\mathrm{finite}}$) predicts ground-truth sense identity above and beyond
 BERT cosine distance ($\hat{\beta} = 5.303$, LRT $\chi^2(2) = 164.75$,
-$p < .001$), resolving an estimated $\overline{\mathrm{CI}}_h = 0.190$ bits of
+$p < .001$), resolving an estimated $\overline{\mathrm{CI}}_h = 0.191$ bits of
 residual sense-identity uncertainty per stimulus pair on average---a warrant
 efficiency of $\bar\eta_h = 0.266$, just over a quarter of the disambiguation
 load left unresolved by continuous distance alone---providing preliminary
