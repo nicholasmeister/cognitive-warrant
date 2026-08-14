@@ -671,7 +671,7 @@ The hierarchical connectivity indicator
 BERT cosine distance ($\hat{\beta} = 5.303$, LRT $\chi^2(2) = 164.75$,
 $p < .001$), resolving an estimated $\overline{\mathrm{CI}}_h = 0.191$ bits of
 residual sense-identity uncertainty per stimulus pair on average---a warrant
-efficiency of $\bar\eta_h = 0.266$, just over a quarter of the disambiguation
+efficiency of $\bar\eta_h = 0.266,$ just over a quarter of the disambiguation
 load left unresolved by continuous distance alone---**providing preliminary evidence that LCSH's DAG structure encodes cognitively meaningful distinctions**.
 
 ### Where does each predictor's $CI(d)$ peak?
