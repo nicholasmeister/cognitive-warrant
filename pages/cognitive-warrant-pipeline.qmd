@@ -299,6 +299,38 @@ p_ci_S <- ggplot(grid_d, aes(d, CI_grid_v2)) +
 p_ci_S
 ```
 
+### Diagnosing the multiple peaks past $d = 0.4$
+
+The curve above is not smooth in its sparse right tail -- it bumps up and down several times past $d \approx 0.4$ rather than settling toward a single value. This is a sparse-data artifact of the local-window weighting scheme, not evidence of several genuine hot zones, and the mechanism is worth surfacing rather than leaving as an unexplained wiggle (it is the same general failure mode as the `hier_distance` model's negative-`CI_grid_hier` region diagnosed below, just manifesting as spurious peaks here instead of negative dips).
+
+`pi_S1` -- the local, $\pm0.05$-window empirical estimate of $P(S=1\mid d)$ that both `H_full_grid` and the mixture entropy `H_true_S` are built from -- is 0 almost everywhere past $d = 0.4$, because same-heading ($S=1$) pairs are extremely rare out there. It only becomes nonzero in the narrow neighborhoods around a handful of isolated same-heading pairs:
+
+```{r ci-s-tail-support}
+tail_support <- grid_d %>%
+  filter(d > 0.4) %>%
+  rowwise() %>%
+  mutate(
+    n_local    = sum(abs(pairs_df$d - d) <= 0.05),
+    n_local_S1 = sum(pairs_df$S[abs(pairs_df$d - d) <= 0.05])
+  ) %>%
+  ungroup() %>%
+  select(d, pi_S1, n_local, n_local_S1, CI_grid_v2)
+
+tail_support %>% filter(n_local_S1 > 0)
+```
+
+```{r ci-s-tail-pairs}
+pairs_df %>%
+  filter(d > 0.4, S == 1) %>%
+  select(pair_id, word, d, S, Y)
+```
+
+Only 4 distinct words -- `tape`, `drill`, `course`, `charm` -- have a same-heading pair anywhere past $d = 0.4$, each sitting at one isolated $d$ value (each word contributes two rows here only because the prime/target order is reversed between them, not because of a second independent pair). Everywhere else in this stretch, the $\pm0.05$ window contains only different-heading pairs, so `pi_S1 = 0` and `CI_grid_v2` collapses to exactly 0 -- visible directly above, and in the flat-zero stretches of the plotted curve between bumps.
+
+Why does a brief, small rise in `pi_S1` produce such a large bump in $CI(d)$? By this point in the pipeline, `p_full_grid_S1` ($\approx 0.95$-$0.98$) and `p_full_grid_S0` ($\approx 0.0005$-$0.0015$) sit at opposite extremes -- the *conditional* model is confident either way, consistent with $S \approx Y$ almost everywhere (per the diagnostic at the top of this page). But `H_true_S` is the entropy of the **mixture** probability, `pi_S1`$\cdot p(S{=}1) + (1-$`pi_S1`$)\cdot p(S{=}0)$. Since those two probabilities are so far apart, even a small nonzero `pi_S1` drags the mixed probability up toward the maximally uncertain 0.5 region -- and entropy is sharply concave there, so it swells fast. At $d \approx 0.54$, for instance, `pi_S1` $\approx 0.4$ pulls the mixed probability to $\approx 0.38$, which alone is enough to produce the single highest point on the whole curve.
+
+So each peak marks a moment where the sliding window happens to graze one of these four isolated same-heading pairs in an otherwise same-heading-empty region -- a fixed-bandwidth local window becoming unstable wherever its conditioning variable is sparse, amplified here by how nonlinear entropy is near $p=0.5$. Read the piecewise (binned) estimate, `ci_piecewise`, as the more trustworthy summary of this region: it uses every pair's own observed $S$ rather than a local approximation, and does not exhibit this artifact.
+
 ## Step 4: Pointwise cognitive information, $pCI_i$
 
 `pCI` measures how much a single pair's outcome is (dis)confirmed by the full model relative to a marginal reference, in bits:
