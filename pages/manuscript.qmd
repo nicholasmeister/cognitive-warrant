@@ -52,11 +52,7 @@ Trott, S., & Bergen, B. (2023). Word meaning is both categorical and continuous.
 Sean Trott and Oisín Parkinson-Coombs. 2026. Graduating the Benchmark Scale: Lessons from Thermometry. In Proceedings of the Workshop on Evaluating Evaluations (EvalEval), pages 111–115, San Diego, CA. Association for Computational Linguistics.
 :::
 
-::: {.file-card}
-[📊 Data Used in My Proof of Concept (CSV)](../assets/data/tb2023_exp2_lcsh_distances.csv)
 
-The preliminary results reported in chapter 5 are drawn from a secondary analysis of the stimulus materials from Trott and Bergen (2023), Experiment 2, merged with a newly constructed mapping of those materials onto Library of Congress Subject Headings. This merge is recorded in the CSV file and constitutes the analytic dataset for the study's proof of concept.
-:::
 ---
 
 I very much welcome questions and feedback about my research. Please contact me at [nicholas.meister@du.edu](mailto:nicholas.meister@du.edu). 
