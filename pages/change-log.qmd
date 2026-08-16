@@ -4,9 +4,11 @@ title: "Change Log"
 
 ## Overview
 
-This page lists versions of my research document and the corresponding changes. 
+This page lists versions of my documents and the corresponding changes. 
 
 
+::: {.file-card}
+[📄 Meister — Cognitive Warrant (PDF)](../assets/pdf/meister_cognitive_warrant.pdf)
 
 | Version | Date | Updates |
 | ----- | ----- | ----- |
@@ -17,8 +19,14 @@ This page lists versions of my research document and the corresponding changes.
 
 : {tbl-colwidths="[15,15,70]"}
 
-[Back to Research Document](manuscript.qmd)
+:::
 
+::: {.file-card}
+[📄 Meister — pCI-Gradient Ascent (PDF)](../assets/pdf/meister_pCI_gradient_ascent.pdf)
 
+| Version | Date | Updates |
+| ----- | ----- | ----- |
+| 1.0 | August 16, 2026 | Initial posting of document |
 
+:::
 
