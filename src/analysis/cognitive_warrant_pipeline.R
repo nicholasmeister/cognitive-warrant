@@ -17,11 +17,11 @@ sink("pipeline_log.txt", split = TRUE)
 # Install required packages with: install.packages(c("tidyverse", "logistf", "lme4","splines","patchwork"))
 # ================================================================
 
-library(tidyverse)      # data analysis and visualization
-library(logistf)        # fits a logistic regression model using Firth's bias reduction method
-library(lme4)           # fits linear and generalized linear mixed-effects models
+library(tidyverse)      # data wrangling and plotting
+library(logistf)        # Firth's bias-reduced logistic regression (stable under separation)
+library(lme4)           # generalized linear mixed-effects models (random-intercept robustness check)
 library(splines)        # provides functions for working with regression splines
-library(patchwork)      # combines separate ggplots into the same graphic
+library(patchwork)      # combines separate ggplots into one figure
 
 set.seed(1226)
 
@@ -88,7 +88,7 @@ message(sprintf(
 ))
 
 # ----------------------------------------------------------------
-# Step 1: Data diagnostics -- run before trusting any fitted model
+# Step 0.5: Data diagnostics -- run before trusting any fitted model
 # ----------------------------------------------------------------
 
 # (a) Is S perfectly collinear with Y? This is the single most consequential
@@ -142,7 +142,7 @@ message(sprintf(
 ))
 
 # ----------------------------------------------------------------
-# Step 2: Fit baseline and full logistic models
+# Step 1: Fit baseline and full logistic models
 # ----------------------------------------------------------------
 
 # Baseline: logit P(Y = 1 | d) = beta0 + beta1 * d
@@ -196,7 +196,7 @@ pairs_df <- pairs_df %>%
   )
 
 # ----------------------------------------------------------------
-# Step 3: From fitted probabilities to conditional entropy
+# Step 2: From fitted probabilities to conditional entropy
 # ----------------------------------------------------------------
 
 h_b <- function(p) {
@@ -211,7 +211,7 @@ pairs_df <- pairs_df %>%
   )
 
 # ----------------------------------------------------------------
-# Step 4: Piecewise (binned) cognitive information, CI(d)
+# Step 3: Piecewise (binned) cognitive information, CI(d)
 # ----------------------------------------------------------------
 
 K <- 6  # fewer bins than in the schematic Ch. 5 template, given n = 299
@@ -292,7 +292,7 @@ p_ci_S <- ggplot(grid_d, aes(d, CI_grid_v2)) + geom_line() +
 print(p_ci_S)
 
 # ----------------------------------------------------------------
-# Step 5: Pointwise cognitive information, pCI_i
+# Step 4: Pointwise cognitive information, pCI_i
 # ----------------------------------------------------------------
 
 pairs_df <- pairs_df %>%
@@ -351,7 +351,7 @@ pairs_df %>%
   print()
 
 # ----------------------------------------------------------------
-# Step 6: Expected cognitive information and warrant efficiency
+# Step 5: Expected cognitive information and warrant efficiency
 # ----------------------------------------------------------------
 
 # Uses CI_k_v2 (corrected) -- see the H_bar_d_mix fix in ci_piecewise above.
@@ -409,17 +409,17 @@ m_full_hier_firth <- logistf(Y ~ d + h_finite, data = pairs_df)
 summary(m_full_hier_firth)
 
 # ----------------------------------------------------------------
-# Steps 3-6, re-run for m_full_hier (using the Firth refit)
+# Steps 2-5, re-run for m_full_hier (using the Firth refit)
 # ----------------------------------------------------------------
 
-# Step 3 (hier): fitted probability -> conditional entropy
+# Step 2 (hier): fitted probability -> conditional entropy
 pairs_df <- pairs_df %>%
   mutate(
     p_full_hier = plogis(predict(m_full_hier_firth, newdata = pairs_df, type = "link")),
     H_full_hier = h_b(p_full_hier)
   )
 
-# Step 4 (hier): piecewise cognitive information
+# Step 3 (hier): piecewise cognitive information
 # Reuses the same `distance_bin` factor created for the S-based table, so
 # the two piecewise tables are directly comparable bin-for-bin.
 ci_piecewise_hier <- pairs_df %>%
@@ -663,7 +663,7 @@ pairs_df %>%
   slice_head(n = 10) %>%
   as.data.frame()   # avoids tibble's column-count truncation
 
-# Step 6 (hier): expected cognitive information and warrant efficiency
+# Step 5 (hier): expected cognitive information and warrant efficiency
 # Uses CI_k_hier_v2 / H_bar_d_mix_hier (corrected) -- see the fix in
 # ci_piecewise_hier above.
 CI_bar_hier  <- with(ci_piecewise_hier, sum(P_d * CI_k_hier_v2))
@@ -710,11 +710,11 @@ new_negatives %>%
 
 
 # ----------------------------------------------------------------
-# Step 7: Saving output
+# Step 6: Saving output
 # ----------------------------------------------------------------
 # Two different things are saved here: (a) the analysis-ready tables and
-# fitted model objects, so downstream work (plots, the dissertation
-# write-up, re-checking a number six months from now) doesn't require
+# fitted model objects, so downstream work (plots, the write-up,
+# re-checking a number six months from now) doesn't require
 # re-running the whole pipeline -- re-fitting m_full_firth via logistf is
 # the slow step; and (b) a full console transcript, for an audit trail of
 # exactly what a given run printed (fitted coefficients, LRTs, warnings).
@@ -786,7 +786,7 @@ ci_bar_latex_hier <- ci_piecewise_hier %>%
 
 writeLines(ci_bar_latex_hier, file.path(out_dir, "ci_bar_table_hier.tex"))
 
-# --- Key scalars, in case you just want the headline numbers on hand ---
+# --- Key scalars, in case we just want the headline numbers on hand ---
 summary_scalars <- tibble(
   quantity = c("CI_bar_S", "eta_bar_S", "CI_bar_hier", "eta_bar_hier",
                "same_vs_heading_agreement"),
