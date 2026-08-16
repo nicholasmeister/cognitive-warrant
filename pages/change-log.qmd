@@ -8,7 +8,7 @@ This page lists versions of my documents and the corresponding changes.
 
 
 ::: {.file-card}
-[📄 Meister — Cognitive Warrant (PDF)](../assets/pdf/meister_cognitive_warrant.pdf)
+[Research Document](../pages/manuscript.qmd)
 
 | Version | Date | Updates |
 | ----- | ----- | ----- |
@@ -23,8 +23,9 @@ This page lists versions of my documents and the corresponding changes.
 
 
 
+
 ::: {.file-card}
-[📄 Meister — pCI-Gradient Ascent (PDF)](../assets/pdf/meister_pCI_gradient_ascent.pdf)
+[KOS Reform Pipeline](../pages/gradient-ascent.qmd)
 
 | Version | Date | Updates |
 | ----- | ----- | ----- |
