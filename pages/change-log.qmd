@@ -15,7 +15,7 @@ This page lists versions of my research document and the corresponding changes.
 | 2.5.2 | August 12, 2026 | Added a paragraph to the lit review chapter pointing towards the new section "Information-Theoretic Accounts of Category Structure in Cognitive Science" in the theoretical framework chapter |
 | 2.5.1 | August 11, 2026 | Expanded Maximum Entropy portion of Section 3.3: H3 as a Mathematical Consequence of the CI Framework |
 
-
+: {tbl-colwidths="[15,15,70]"}
 
 [Back to Research Document](manuscript.qmd)
 
