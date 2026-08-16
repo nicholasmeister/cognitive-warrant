@@ -9,7 +9,7 @@ title: "Cognitive Warrant Research Document"
 
 From Literary Warrant to Cognitive Warrant: Extending Hybrid Meaning Theory to Professionally Imposed Categorical Boundaries
 
-Version 2.5.3 --- Last revised: August 13, 2026 --- [Change log](change-log.qmd)
+Version 2.5.4 --- Last revised: August 16, 2026 --- [Change log](change-log.qmd)
 :::
 
 ## About This Document
