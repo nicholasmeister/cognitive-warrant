@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Cognitive Neuroscience Grant Proposal – Cognitive Warrant &amp; LCSH: Research Hub</title>
+<title>Surrogate-Assisted pCI-Gradient Ascent – Cognitive Warrant &amp; LCSH: Research Hub</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -108,6 +108,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -171,8 +200,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#documents" id="toc-documents" class="nav-link" data-scroll-target="#documents">Documents</a></li>
+  <li><a href="#document" id="toc-document" class="nav-link active" data-scroll-target="#document">Document</a></li>
+  <li><a href="#about-this-document" id="toc-about-this-document" class="nav-link" data-scroll-target="#about-this-document">About This Document</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/nicholasmeister/cognitive-warrant/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -181,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Cognitive Neuroscience Grant Proposal</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Surrogate-Assisted pCI-Gradient Ascent</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -198,19 +227,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This was the main assignment in my cognitive neuroscience graduate seminar – a grant proposal for a hypothetical research project. This is where I first came across Trott and Bergen (2023), and the proposal is a (novice) attempt at validating their hybrid meaning theory with magnetoencephalography (MEG). I didn’t even know MEG existed before the seminar, but I learned so much about the primary methods and key experimental findings associated with cognitive neuroscience. Needless to say, this was offered by the DU Psychology Department, not the MLIS program. I was very fortunate to get approval to count it as an elective towards my degree. Cognitive warrant and its engagement with LCSH is a direct result of this seminar.</p>
-<p>Please note that formatting guidelines for National Institutes of Health grant proposals are strict: specific aims limited to one page (single-spaced), research strategy (background, significance, approach) limited to six pages (single-spaced), but no page limit on references.</p>
+<section id="document" class="level2">
+<h2 class="anchored" data-anchor-id="document">Document</h2>
+<div class="file-card">
+<p><a href="../assets/pdf/meister_pCI_gradient_ascent.pdf">📄 Meister — pCI-Gradient Ascent (PDF)</a></p>
+<p>Surrogate-Assisted pCI-Gradient Ascent: A Combinatorial Optimization Procedure for Reforming Knowledge Organization Systems</p>
+<p>Version 1.0 — Last revised: August 16, 2026 — <a href="../pages/change-log.html">Change log</a></p>
+</div>
 </section>
-<section id="documents" class="level2">
-<h2 class="anchored" data-anchor-id="documents">Documents</h2>
-<div class="file-card">
-<p><a href="../assets/pdf/meister_cog_neuro_grant_proposal.pdf">📄 Cognitive Neuroscience Grant Proposal (PDF)</a></p>
-</div>
-<div class="file-card">
-<p><a href="../assets/pdf/trott_bergen_2023.pdf">📄 Trott and Bergen (2023) original article (PDF)</a></p>
-</div>
+<section id="about-this-document" class="level2">
+<h2 class="anchored" data-anchor-id="about-this-document">About This Document</h2>
+<p>In Section 3.5 of my research document <a href="../pages/manuscript.html">From Literary Warrant to Cognitive Warrant</a>, I stated:</p>
+<blockquote class="blockquote">
+<p>The per-item resolution of <span class="math inline">\(\mathrm{pCI}\)</span> opens a further application beyond diagnosis. The fitted mixed-effects model that produces <span class="math inline">\(\mathrm{pCI}\)</span> scores serves a dual function: it is both a diagnostic and a surrogate for predicting the cognitive-information consequences of proposed graph edits to the LCSH DAG, without requiring new behavioral data collection after each proposed change. This surrogate capacity means the model can in principle be extended into a prescriptive optimization procedure rather than a purely descriptive one. The result is a ranked agenda specifying not only heading assignments are cognitively problematic, but editorial action—reassignment, record splitting, or BT/NT restructuring—would most improve the aggregate cognitive warrant score.This , and the combinatorial optimization framework it requires, are developed in a companion technical document and are outside the scope of the present study; once run, the behavioral experiments described here will provide the fitted model that makes the procedure executable.</p>
+</blockquote>
+<p>This document starts where pointwise cognitive information left off – a prioritized list of problematic subject headings identified by a negative <span class="math inline">\(\mathrm{pCI}\)</span> but no specification of what editing actions the cataloger should take. The surrogate-assisted pCI-gradient ascent algorithm fills that gap. Its output is a sequence of recommended edit operations for the cataloger or editor of the KOS, interpretable to an information professional without quantitative training—each recommendation is a specific, named edit to a specific, named authority record.</p>
+<p>Together, pCI and the algorithm constitute a complete empirical reform pipeline for knowledge organization systems. It is important to note, however, that it does not supplant literary warrant, cultural warrant, and professional expertise as necessary inputs to any final editorial decision. What the procedure adds is a quantitative, behaviorally grounded “first filter” that directs expert attention toward the changes most likely to improve the cognitive accessibility of the vocabulary for its users.</p>
 
 
 <!-- -->
@@ -677,27 +709,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Cognitive Neuroscience Grant Proposal"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Surrogate-Assisted pCI-Gradient Ascent"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Document</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>This was the main assignment in my cognitive neuroscience graduate seminar -- a grant proposal for a hypothetical research project. This is where I first came across Trott and Bergen (2023), and the proposal is a (novice) attempt at validating their hybrid meaning theory with magnetoencephalography (MEG). I didn't even know MEG existed before the seminar, but I learned so much about the primary methods and key experimental findings associated with cognitive neuroscience. Needless to say, this was offered by the DU Psychology Department, not the MLIS program. I was very fortunate to get approval to count it as an elective towards my degree. Cognitive warrant and its engagement with LCSH is a direct result of this seminar. </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Please note that formatting guidelines for National Institutes of Health grant proposals are strict: specific aims limited to one page (single-spaced), research strategy (background, significance, approach) limited to six pages (single-spaced), but no page limit on references.</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Documents</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>::: {.file-card}</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">📄 Cognitive Neuroscience Grant Proposal (PDF)</span><span class="co">](../assets/pdf/meister_cog_neuro_grant_proposal.pdf)</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>::: {.file-card}</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">📄 Trott and Bergen (2023) original article (PDF)</span><span class="co">](../assets/pdf/trott_bergen_2023.pdf)</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>::: {.file-card}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">📄 Meister — pCI-Gradient Ascent (PDF)</span><span class="co">](../assets/pdf/meister_pCI_gradient_ascent.pdf)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Surrogate-Assisted pCI-Gradient Ascent: A Combinatorial Optimization Procedure for Reforming Knowledge Organization Systems</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Version 1.0 --- Last revised: August 16, 2026 --- <span class="co">[</span><span class="ot">Change log</span><span class="co">](change-log.qmd)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## About This Document</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>In Section 3.5 of my research document <span class="co">[</span><span class="ot">From Literary Warrant to Cognitive Warrant</span><span class="co">](../pages/manuscript.qmd)</span>, I stated:</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The per-item resolution of $\mathrm{pCI}$ opens a further application beyond diagnosis. The fitted mixed-effects model that produces $\mathrm{pCI}$ scores serves a dual function: it is both a diagnostic and a surrogate for predicting the cognitive-information consequences of proposed graph edits to the LCSH DAG, without requiring new behavioral data collection after each proposed change. This surrogate capacity means the model can in principle be extended into a prescriptive optimization procedure rather than a purely descriptive one. The result is a ranked agenda specifying not only \textit{which} heading assignments are cognitively problematic, but \textit{what} editorial action---reassignment, record splitting, or BT/NT restructuring---would most improve the aggregate cognitive warrant score.This \emph{surrogate-assisted pCI-gradient ascent procedure}, and the combinatorial optimization framework it requires, are developed in a companion technical document and are outside the scope of the present study; once run, the behavioral experiments described here will provide the fitted model that makes the procedure executable.</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>This document starts where pointwise cognitive information left off -- a prioritized list of problematic subject headings identified by a negative $\mathrm{pCI}$ but no specification of what editing actions the cataloger should take. The surrogate-assisted pCI-gradient ascent algorithm fills that gap. Its output is a sequence of recommended edit operations for the cataloger or editor of the KOS, interpretable to an information professional without quantitative training---each recommendation is a specific, named edit to a specific, named authority record. </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>Together, pCI and the algorithm constitute a complete empirical reform pipeline for knowledge organization systems. It is important to note, however, that it does not supplant literary warrant, cultural warrant, and professional expertise as necessary inputs to any final editorial decision. What the procedure adds is a quantitative, behaviorally grounded "first filter" that directs expert attention toward the changes most likely to improve the cognitive accessibility of the vocabulary for its users.</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

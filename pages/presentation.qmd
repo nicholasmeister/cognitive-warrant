@@ -9,7 +9,7 @@ This page collects documents related to the Capstone presentation I gave to MLIS
 ## Documents
 
 ::: {.file-card}
-[📄 Presentation slides](../assets/pdf/presentation_deck.pdf)
+[📄 Presentation slides](../assets/pdf/meister_capstone_presentation_deck.pdf)
 :::
 
 ::: {.file-card}

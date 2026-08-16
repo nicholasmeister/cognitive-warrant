@@ -1,0 +1,26 @@
+---
+title: "Surrogate-Assisted pCI-Gradient Ascent"
+---
+
+## Document
+
+::: {.file-card}
+[📄 Meister — pCI-Gradient Ascent (PDF)](../assets/pdf/meister_pCI_gradient_ascent.pdf)
+
+Surrogate-Assisted pCI-Gradient Ascent: A Combinatorial Optimization Procedure for Reforming Knowledge Organization Systems
+
+Version 1.0 --- Last revised: August 16, 2026 --- [Change log](change-log.qmd)
+
+:::
+
+## About This Document
+
+In Section 3.5 of my research document [From Literary Warrant to Cognitive Warrant](../pages/manuscript.qmd), I stated:
+
+> The per-item resolution of $\mathrm{pCI}$ opens a further application beyond diagnosis. The fitted mixed-effects model that produces $\mathrm{pCI}$ scores serves a dual function: it is both a diagnostic and a surrogate for predicting the cognitive-information consequences of proposed graph edits to the LCSH DAG, without requiring new behavioral data collection after each proposed change. This surrogate capacity means the model can in principle be extended into a prescriptive optimization procedure rather than a purely descriptive one. The result is a ranked agenda specifying not only \textit{which} heading assignments are cognitively problematic, but \textit{what} editorial action---reassignment, record splitting, or BT/NT restructuring---would most improve the aggregate cognitive warrant score.This \emph{surrogate-assisted pCI-gradient ascent procedure}, and the combinatorial optimization framework it requires, are developed in a companion technical document and are outside the scope of the present study; once run, the behavioral experiments described here will provide the fitted model that makes the procedure executable.
+
+This document starts where pointwise cognitive information left off -- a prioritized list of problematic subject headings identified by a negative $\mathrm{pCI}$ but no specification of what editing actions the cataloger should take. The surrogate-assisted pCI-gradient ascent algorithm fills that gap. Its output is a sequence of recommended edit operations for the cataloger or editor of the KOS, interpretable to an information professional without quantitative training---each recommendation is a specific, named edit to a specific, named authority record. 
+
+Together, pCI and the algorithm constitute a complete empirical reform pipeline for knowledge organization systems. It is important to note, however, that it does not supplant literary warrant, cultural warrant, and professional expertise as necessary inputs to any final editorial decision. What the procedure adds is a quantitative, behaviorally grounded "first filter" that directs expert attention toward the changes most likely to improve the cognitive accessibility of the vocabulary for its users.
+
+

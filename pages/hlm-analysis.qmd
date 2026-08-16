@@ -8,7 +8,7 @@ It was quite serendipitous that a Hierarchical Linear Models (HLM) course was of
 
 
 ::: {.file-card}
-[📄 HLM Article Analysis (PDF)](../assets/pdf/rms4915_article_critique.pdf)
+[📄 HLM Article Analysis (PDF)](../assets/pdf/meister_rms4915_article_critique.pdf)
 :::
 
 ::: {.file-card}
