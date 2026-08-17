@@ -9,7 +9,7 @@ title: "Surrogate-Assisted pCI-Gradient Ascent"
 
 Surrogate-Assisted pCI-Gradient Ascent: A Combinatorial Optimization Procedure for Reforming Knowledge Organization Systems
 
-Version 1.0 --- Last revised: August 16, 2026 --- [Change log](change-log.qmd)
+Version 1.1 --- Last revised: August 17, 2026 --- [Change log](change-log.qmd)
 
 :::
 
