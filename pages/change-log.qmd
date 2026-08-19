@@ -12,7 +12,7 @@ This page lists versions of my documents and the corresponding changes.
 
 | Version | Date | Updates |
 | ----- | ----- | ----- |
-| 2.5.6 | August 19, 2026 | Removed the covariate `prior_rt` from Experiment 2 statistical models. |
+| 2.5.6 | August 19, 2026 | Removed the covariate `prior_rt` from Experiment 2 statistical models. Changed uses of *participant* to *subject* for consistency. |
 | 2.5.5 | August 16, 2026 | Added subsection 3.5.3 presenting the hierarchical cognitive information increment. This metric had been inadvertently dropped from the capstone project but it necessary for justification of the surrogate used in the pCI-Gradient Ascent document. |
 | 2.5.4 | August 16, 2026 | Clarified (in Section 4.4.5. Computational Semantic Measures) the numbering of the two sentence frames used for calculating BERT cosine distance between the context embeddings and subject heading embeddings in Experiment 2. This now aligns with Section 4.4.6. Dependent and Independent Variables.  |
 | 2.5.3 | August 13, 2026 | Minor edits to theory chapter and Section 3.4 |
