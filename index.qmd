@@ -38,6 +38,7 @@ correspond to measurable patterns in our semantic cognition. Substituting LCSH b
 : {tbl-colwidths="[20,80]"}
 
 
+-----
 I very much welcome questions and feedback about any of the content here. Please contact me at [nicholas.meister@du.edu](mailto:nicholas.meister@du.edu).
 
 ## License
