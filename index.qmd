@@ -33,7 +33,7 @@ correspond to measurable patterns in our semantic cognition. Substituting LCSH b
 | [Summary Documents](pages/summary-documents.qmd) | These are two documents I created to explain simply what my capstone project was trying to accomplish. They might be helpful for those without an LIS background.|
 | [HLM Analysis](pages/hlm-analysis.qmd) | This was an assignment in my Hierarchical Linear Models (HLM) course, requiring students to critique an empirical research article that utilizes HLM. Naturally, I took this opportunity to better understand the methodology of Trott and Bergen (2023).|
 | [Grant Proposal](pages/grant-proposal.qmd) | This was the main assignment in my cognitive neuroscience graduate seminar -- a grant proposal for a hypothetical research project. This is where I first came across Trott and Bergen (2023), and the proposal is an attempt at validating their hybrid meaning theory with magnetoencephalography (MEG).|
-| [Profile Page](pages/profile.qmd) | My academic and professional background and research interests |
+| [Profile Page](pages/profile.qmd) | My academic and professional background and current research interests |
 
 : {tbl-colwidths="[20,80]"}
 
