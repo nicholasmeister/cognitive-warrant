@@ -18,7 +18,7 @@ This seems to be the direction of my future research:
 
 - **Disciplines**: The application of cognitive science theories and methods to information science and knowledge organization systems (and vice versa). Always with a preference for interdisciplinary research.
 - **Methodology**: Developing valid quantitative indicators and computational methods to operationally measure abstract constructs (e.g., translation equivalence, interdisciplinarity, or relevance).
-- **Topics**: Usually involving the topics of language, meaning, cognition, and representation. This can manifest in or involve psycholinguistics, cognitive linguistics, computational linguistics, translation studies, knowledge representation, semiotics, and information retrieval.
+- **Topics**: Usually involving the topics of language, meaning, cognition, and representation. This can manifest in or involve psycholinguistics, cognitive linguistics, natural language processing, translation studies, knowledge representation, semiotics, and information retrieval.
 
 I usually describe my research interests as my “continuously evolving constellation of interests.” A constellation is a decent characterization as, despite being tremendously expansive and diverse, there is structure, and my joy is in the intersection of seemingly unrelated topics, concepts, and disciplines. My diverse academic background has either been the cause or effect of becoming energized when I can connect or apply ideas across disciplines. 
 
