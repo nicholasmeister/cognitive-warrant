@@ -2,12 +2,6 @@
 title: "Nick Meister's Profile"
 ---
 
-## Page In Progess
-
-For now, I offer my CV. I appreciate your visiting of my research website. I will be adding more information to this profile page soon.
-
-
-
 
 ::: {.file-card}
 [📄 Meister — CV (PDF)](../assets/pdf/meister_cv.pdf)
@@ -16,7 +10,49 @@ My current CV with academic and professional background
 
 :::
 
+## Current and Future Research
 
+I embody the principle that diverse life experiences enrich scholarly inquiry, demonstrating that non-traditional paths lead to innovative research that addresses complex problems beyond the scope of any single discipline.
+
+This seems to be the direction of my future research: 
+- Disciplines: The application of cognitive science theories and methods to information science and knowledge organization systems (and vice versa). Always with a preference for interdisciplinary research.
+- Methodology: Developing valid quantitative indicators and computational methods to operationally measure abstract constructs (e.g., translation equivalence, interdisciplinarity, or relevance).
+- Topics: Usually involving the topics of language, meaning, cognition, and representation. This can manifest in or involve psycholinguistics, cognitive linguistics, computational linguistics, translation studies, knowledge representation, semiotics, and information retrieval.
+
+I usually describe my research interests as my “continuously evolving constellation of interests.” A constellation is a decent characterization as, despite being tremendously expansive and diverse, there is structure, and my joy is in the intersection of seemingly unrelated topics, concepts, and disciplines. My diverse academic background has either been the cause or effect of becoming energized when I can connect or apply ideas across disciplines. 
+
+Across and within those disciplines, I have come to see that my research interests usually jump back and forth between the extremes of the theoretical-applied continuum. Furthermore, I believe that my most exciting work is when I am bridging those extremes. 
+
+The concepts, methods, and disciplines in my constellation of interests as well as their distribution along the theoretical-applied continuum are continuously evolving, but I have found recurring themes. My fundamental interests include meaning, cognition, representation, language, systems, measurement, complexity, emergence, causality, randomness, inference, patterns, connections, ontology, epistemology, information, modeling and construct validity, as well as quantitative and computational methods. 
+
+## My (current) core research interests:  
+
+- **Cognition, Language, and Understanding**
+	- Thought-language relationships
+	- Categorization research
+	- Memory, learning, knowledge acquisition, and understanding 
+	- Natural language processing
+- **Meaning, Representation, and Interpretation**   
+	- Semiotics, lexical semantics, theory of translation 
+	- Knowledge representation and reasoning systems  
+- **Data, Information, and Knowledge**  
+	- Information organization, storage, retrieval, and use  
+	- Knowledge organization and information retrieval 
+	- Measurement of interdisciplinarity (scientometrics)
+	- Linked data, RDF, Apache Jena, SPARQL
+- **Research Methodology and Philosophy of Science**
+	- Construct validity, conceptualization, operationalization, and modeling  
+	- Measurement theory 
+	- Causal inference (its philosophy, science, and statistics)  
+	- Interdisciplinary research: theory and practice
+- **Mathematical Modeling and Optimization**
+	- Information Theory
+	- Combinatorial optimization and graph refinement
+	- Hierarchical linear models
+- **Systems and Complexity**: networks, emergence, and complex (adaptive) systems  
+
+
+I am interested in building generous, collaborative relationships based on genuine curiosity about others' work and mutual support. 
 
 
 ---
