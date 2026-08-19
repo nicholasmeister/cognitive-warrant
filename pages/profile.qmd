@@ -39,7 +39,7 @@ The concepts, methods, and disciplines in my constellation of interests as well 
 - **Data, Information, and Knowledge**  
 	- Information organization, storage, retrieval, and use  
 	- Knowledge organization and information retrieval 
-	- Measurement of interdisciplinarity (scientometrics)
+	- Measurement of interdisciplinarity (bibliometrics)
 	- Linked data, RDF, Apache Jena, SPARQL
 - **Research Methodology and Philosophy of Science**
 	- Construct validity, conceptualization, operationalization, and modeling  
