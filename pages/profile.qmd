@@ -1,0 +1,24 @@
+---
+title: "Nick Meister's Profile"
+---
+
+## Page In Progess
+
+For now, I offer my CV. I appreciate your visiting of my research website. I will be adding more information to this profile page soon.
+
+
+
+
+::: {.file-card}
+[📄 Meister — CV (PDF)](../assets/pdf/meister_cv.pdf)
+
+My current CV with academic and professional background
+
+:::
+
+
+
+
+---
+
+I very much welcome questions and feedback about my research. Please contact me at [nicholas.meister@du.edu](mailto:nicholas.meister@du.edu). 
