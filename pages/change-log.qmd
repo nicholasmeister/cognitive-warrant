@@ -38,3 +38,15 @@ This page lists versions of my documents and the corresponding changes.
 
 :::
 
+
+::: {.file-card}
+Website
+
+| Date | Update |
+| ----- | ----- |
+| August 24, 2026 | Added roadmap webpage which lists planned updates to my research documents and website |
+
+
+: {tbl-colwidths="[30,70]"}
+
+:::
