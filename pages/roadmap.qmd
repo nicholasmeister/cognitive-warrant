@@ -2,9 +2,7 @@
 title: "Cognitive Warrant Roadmap"
 ---
 
-## Overview
-
-This page lists my planned updates to my research documents or website.
+This page lists planned updates to my research documents or website.
 
 
 ::: {.file-card}
