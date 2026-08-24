@@ -1,0 +1,39 @@
+---
+title: "Cognitive Warrant Roadmap"
+---
+
+## Overview
+
+This page lists my planned updates to my research documents or website.
+
+
+::: {.file-card}
+## Now
+1. Finalize and post LIS edition of research document 
+2. Run the HLM in my statistical analysis plan for Experiment 1 using Trott and Bergen’s data as a further proof of concept
+3. Further address the “imperfection” of LCSH as the object of study (Young, 2017)
+4. Assess mapping stimuli by sentence, not word sense, in light of proof of concept results
+:::
+
+::: {.file-card}
+## Next
+1. Consider and evaluate other neutral sentence frames for embedding of subject headings
+2. Review Experiment 2 design and finalize LCSH mapping criteria 
+3. Formalize relationship between CI framework and HLM
+4. Adjust numbering of hypotheses? H1.3 and H2.3 instead of H3 and E2-H3?
+5. Reconfirm Lowest Common Ancestor (LCA) is best metric for hierarchical distance; consider alternatives
+:::
+
+::: {.file-card}
+## Later
+1. Update theory paper outline
+2. Compare hierarchical distances against BERT semantic distances (e.g., through Spearman rank correlation)
+3. Find and migrate “The Continuous Nature of `distance_bert` and Its Implications” section
+4. Consider additional experiment where stimuli are drawn from LCSH authority records with parenthetical qualifiers; provides an alternative source of polysemes and homonyms and better sample representation of LCSH
+5. Conduct proof of concept with pCI-gradient ascent pipeline
+6. Post initial sections of tutorial document 
+	1. Probability review and introduction to information theory
+	2. Derivation of pCI from CI(d)
+	3. Logistic regression. Firth’s penalized-likelihood refit (logistf)
+	4. Why proof of concept requires full model even for P(Y=1|d)
+:::
