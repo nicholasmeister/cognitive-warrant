@@ -44,6 +44,7 @@ This page lists versions of my documents and the corresponding changes.
 
 | Date | Update |
 | ----- | ----- |
+| August 25, 2026 | Updated [profile page](../pages/profile.qmd) to include a hierarchy that maps the intellectual scaffolding of my research program |
 | August 24, 2026 | Added [roadmap webpage](../pages/roadmap.qmd) which lists planned updates to my research documents and website |
 
 
