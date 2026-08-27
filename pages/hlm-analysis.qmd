@@ -12,6 +12,8 @@ It was quite serendipitous that a Hierarchical Linear Models (HLM) course was of
 :::
 
 ::: {.file-card}
-[📄 Trott and Bergen (2023) original article (PDF)](../assets/pdf/trott_bergen_2023.pdf)
+[📄 Trott and Bergen (2023) original article (link)](https://psycnet.apa.org/doiLanding?doi=10.1037%2Frev0000420)
+
+Trott, S., & Bergen, B. (2023). Word meaning is both categorical and continuous. Psychological Review, 130(5), 1239–1261. https://doi.org/10.1037/rev0000420
 :::
 
