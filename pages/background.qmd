@@ -15,7 +15,7 @@ Version 1.0 --- Last revised: September 3, 2026 --- [Change log](change-log.qmd)
 
 ## About This Document
 
-This is a document I am working on to cover the prerequisite terrain and provide a curated, centralized reading to bring a motivated reader to the threshold of genuine engagement with the research document. The goal is not exhaustive coverage of any area but to provide the minimum working fluency required to follow the argument.
+This in-progress document aims to cover some of the prerequisite terrain to enable genuine engagement with the research document by a motivated reader. The goal is not exhaustive coverage of any area but to provide the minimum working fluency required to follow the argument (and hopefully provide feedback).
 
 Currently, it only covers conditional probability, entropy, and conditional entropy. More topics to come. 
 
