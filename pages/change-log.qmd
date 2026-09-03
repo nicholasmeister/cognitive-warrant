@@ -40,10 +40,23 @@ This page lists versions of my documents and the corresponding changes.
 
 
 ::: {.file-card}
+[Supplementary Material](../pages/background.qmd)
+
+| Version | Date | Updates |
+| ----- | ----- | ----- |
+| 1.0 | September 3, 2026 | Initial posting of document |
+
+: {tbl-colwidths="[15,15,70]"}
+
+:::
+
+
+::: {.file-card}
 **Website**
 
 | Date | Update |
 | ----- | ----- |
+| September 3, 2026 | Added [supplementary material page](../pages/background.qmd) for more extensive discussion of technical details |
 | August 27, 2026 | I realized that *Psychological Review* articles are behind a paywall and I have thus replaced PDF versions of Trott and Bergen (2023) with links to that article's site. I'm not happy about this, either. |
 | August 25, 2026 | Updated [profile page](../pages/profile.qmd) to include a hierarchy that maps the intellectual scaffolding of my research program |
 | August 24, 2026 | Added [roadmap webpage](../pages/roadmap.qmd) which lists planned updates to my research documents and website |

@@ -20,8 +20,6 @@ The interdisciplinary nature of my research tends to result in any document draw
 
 Cognitive warrant (in its iteration in this research document) integrates seven distinct knowledge domains. The table below names each area and identifies the specific construct from that area the framework imports.
 
-(I am working on a document to cover the prerequisite terrain for each field and provide a curated, centralized reading to bring a motivated reader to the threshold of genuine engagement with the research document. The goal is not exhaustive coverage of any area but to provide the minimum working fluency required to follow the argument.)
-
 
 | Area | Key Constructs Imported |
 |-----|-----|

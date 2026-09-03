@@ -1,0 +1,22 @@
+---
+title: "Supplementary Material to My Cognitive Warrant Research"
+---
+
+## Document
+
+::: {.file-card}
+[📄 Meister — Supplementary Material (PDF)](../assets/pdf/meister_supplement.pdf)
+
+Supplement to my research documents, providing background information, intermediate steps, or detailed explanations for those that are interested. 
+
+Version 1.0 --- Last revised: September 3, 2026 --- [Change log](change-log.qmd) --- [Roadmap](roadmap.qmd)
+
+:::
+
+## About This Document
+
+This is a document I am working on to cover the prerequisite terrain and provide a curated, centralized reading to bring a motivated reader to the threshold of genuine engagement with the research document. The goal is not exhaustive coverage of any area but to provide the minimum working fluency required to follow the argument.
+
+Currently, it only covers conditional probability, entropy, and conditional entropy. More topics to come. 
+
+
