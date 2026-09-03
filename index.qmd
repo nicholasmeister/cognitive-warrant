@@ -31,6 +31,8 @@ correspond to measurable patterns in our semantic cognition. Substituting LCSH b
 | [Presentation Materials](pages/presentation.qmd) | The slides and posters from my Capstone presentation to MLIS faculty. |
 | [IRB Packet](pages/irb.qmd) | Complete IRB exempt certification application materials. |
 
+: {tbl-colwidths="[20,80]"}
+
 ## Secondary Materials
 | Section | Contents |
 | --- | --- |
