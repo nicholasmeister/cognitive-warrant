@@ -44,6 +44,7 @@ This page lists versions of my documents and the corresponding changes.
 
 | Version | Date | Updates |
 | ----- | ----- | ----- |
+| 1.1.1 | September 3, 2026 | Clarified between averaged and pointwise conditional entropy |
 | 1.1 | September 3, 2026 | Added sections on relative entropy and mutual information |
 | 1.0 | September 3, 2026 | Initial posting of document |
 
