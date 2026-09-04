@@ -9,7 +9,7 @@ title: "Supplementary Material to My Cognitive Warrant Research"
 
 Supplement to my research documents, providing background information, intermediate steps, or detailed explanations for those that are interested. 
 
-Version 1.1.1 --- Last revised: September 3, 2026 --- [Change log](change-log.qmd) --- [Roadmap](roadmap.qmd)
+Version 1.1.2 --- Last revised: September 4, 2026 --- [Change log](change-log.qmd) --- [Roadmap](roadmap.qmd)
 
 :::
 
