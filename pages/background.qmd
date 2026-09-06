@@ -9,7 +9,7 @@ title: "Supplementary Material to My Cognitive Warrant Research"
 
 Supplement to my research documents, providing background information, intermediate steps, or detailed explanations for those that are interested. 
 
-Version 1.1.2 --- Last revised: September 4, 2026 --- [Change log](change-log.qmd) --- [Roadmap](roadmap.qmd)
+Version 1.1.3 --- Last revised: September 6, 2026 --- [Change log](change-log.qmd) --- [Roadmap](roadmap.qmd)
 
 :::
 
@@ -17,6 +17,6 @@ Version 1.1.2 --- Last revised: September 4, 2026 --- [Change log](change-log.qm
 
 This in-progress document aims to cover some of the prerequisite terrain to enable genuine engagement with the research document by a motivated reader. The goal is not exhaustive coverage of any area but to provide the minimum working fluency required to follow the argument (and hopefully provide feedback).
 
-More topics to come. 
+It currently addresses probability and information theory. More topics to come. 
 
 
